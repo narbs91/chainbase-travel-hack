@@ -1,5 +1,5 @@
 import { postWithAuth } from "../rest.client";
-import { AwardWalletHotelBooking } from "./award.wallet.types";
+import { AwardWalletHotelBooking } from "./types/award.wallet.types";
 
 export default class AwardWalletClient {
     private apiKey = `${process.env.AWARD_WALLET_USERNAME}:${process.env.AWARD_WALLET_KEY}`;
@@ -8,7 +8,7 @@ export default class AwardWalletClient {
     private PARSE_EMAIL = `${this.BASE_URL}/parseEmail`;
     private GET_PARSE_RESULT = `${this.BASE_URL}/getResults/`;
 
-    public importHotelBooking = async (email: string): Promise<AwardWalletHotelBooking[]> => {
+    public parseAndImportHotelBooking = async (email: string): Promise<AwardWalletHotelBooking[]> => {
         let importedHotelBookings: AwardWalletHotelBooking[] = [];
 
         try {
