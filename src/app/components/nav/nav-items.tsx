@@ -13,6 +13,11 @@ export default function NavItems() {
           Home
         </Button>
       </Link>
+      <Link href="/login">
+        <Button color="black" variant="ghost" title="nav-search-button">
+          Login
+        </Button>
+      </Link>
     </>
   );
 }
