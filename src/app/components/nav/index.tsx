@@ -4,6 +4,8 @@ import React from "react";
 import { chakra, Flex, HStack, Avatar, Link, Image } from "@chakra-ui/react";
 import MobileNav from "./mobile-nav";
 import NavItems from "./nav-items";
+import { useGlobalContext } from "@/app/context/context";
+import { json } from "stream/consumers";
 
 /**
  * Implementation inspired from the developer dao website
