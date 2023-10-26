@@ -1,12 +1,19 @@
-'use client'
+"use client";
 
-import PageLayout from './components/layout/page'
-import { Container, Heading, VStack, chakra, Text, Button } from '@chakra-ui/react'
+import PageLayout from "./components/layout/page";
+import {
+  Container,
+  Heading,
+  VStack,
+  chakra,
+  Text,
+  Button,
+} from "@chakra-ui/react";
 
 export default function Home() {
   return (
-   <PageLayout>
-    <Container maxW={{ base: "sm", sm: "xl" }} padding="20px">
+    <PageLayout>
+      <Container maxW={{ base: "sm", sm: "xl" }} padding="20px">
         <VStack spacing={5}>
           <Heading as="h1">
             <chakra.span
@@ -18,9 +25,7 @@ export default function Home() {
           </Heading>
         </VStack>
         <VStack>
-          <Text>
-            This is a one liner of what our app does
-          </Text>
+          <Text>This is a one liner of what our app does</Text>
         </VStack>
       </Container>
       <chakra.main>
@@ -34,6 +39,6 @@ export default function Home() {
           </VStack>
         </Container>
       </chakra.main>
-   </PageLayout>
-  )
+    </PageLayout>
+  );
 }

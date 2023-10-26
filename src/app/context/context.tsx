@@ -1,6 +1,12 @@
 "use client";
 
-import { Dispatch, SetStateAction, createContext, useContext, useState } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  createContext,
+  useContext,
+  useState,
+} from "react";
 import { User } from "../types/user";
 
 interface ContextProps {
@@ -12,16 +18,17 @@ const UserContext = createContext<ContextProps>({
   user: {
     email: "",
     walletAddress: "",
-    listings: [],
+    listingBookings: [],
+    unlistedBookings: [],
   },
-  setUser: () => {}
+  setUser: () => {},
 });
 
 export const GlobalContextProvider = ({ children }: any) => {
   const [user, setUser] = useState({} as User);
 
   return (
-    <UserContext.Provider value={{user, setUser}}>
+    <UserContext.Provider value={{ user, setUser }}>
       {children}
     </UserContext.Provider>
   );
