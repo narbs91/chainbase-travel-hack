@@ -1,17 +1,19 @@
-import { Listing } from "../types/user"
+import { Property } from "../types/property"
 
 /**
  * Temp Data
  */
 
-const mockedListings: Array<Listing> = [
+const mockedListings: Array<Property> = [
     {
         name: "Grand Royal Hotel",
         address: "123 Royal Lane, Cityville",
         price: 150,
         checkInDate: "2023-11-05",
         checkoutDate: "2023-11-10",
-        imageUrl: "https://example.com/images/hotel1.jpg"
+        imageUrl: "https://example.com/images/hotel1.jpg",
+        description: "This is a description",
+        listed: true
     },
     {
         name: "Oceanview Resort",
@@ -19,7 +21,9 @@ const mockedListings: Array<Listing> = [
         price: 220,
         checkInDate: "2023-11-12",
         checkoutDate: "2023-11-18",
-        imageUrl: "https://example.com/images/hotel2.jpg"
+        imageUrl: "https://example.com/images/hotel2.jpg",
+        description: "This is a description",
+        listed: true
     },
     {
         name: "Downtown Suites",
@@ -27,7 +31,9 @@ const mockedListings: Array<Listing> = [
         price: 110,
         checkInDate: "2023-11-20",
         checkoutDate: "2023-11-22",
-        imageUrl: "https://example.com/images/hotel3.jpg"
+        imageUrl: "https://example.com/images/hotel3.jpg",
+        description: "This is a description",
+        listed: true
     },
     {
         name: "Mountain Escape Lodge",
@@ -35,7 +41,9 @@ const mockedListings: Array<Listing> = [
         price: 180,
         checkInDate: "2023-11-25",
         checkoutDate: "2023-11-30",
-        imageUrl: "https://example.com/images/hotel4.jpg"
+        imageUrl: "https://example.com/images/hotel4.jpg",
+        description: "This is a description",
+        listed: true
     },
     {
         name: "Lakeside Inn",
@@ -43,7 +51,9 @@ const mockedListings: Array<Listing> = [
         price: 140,
         checkInDate: "2023-12-01",
         checkoutDate: "2023-12-05",
-        imageUrl: "https://example.com/images/hotel5.jpg"
+        imageUrl: "https://example.com/images/hotel5.jpg",
+        description: "This is a description",
+        listed: true
     }
 ]
 

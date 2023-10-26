@@ -1,6 +1,6 @@
 "use client";
 import { useGlobalContext } from "../context/context";
-import { Listing } from "../types/user";
+import { Property } from "../types/property";
 
 //Temp
 import mockedListings from "./mockListing.mock";
@@ -90,9 +90,9 @@ export default function Dashboard() {
                     </Tr>
                   </Thead>
                   <Tbody>
-                    {mockedListings.map((listing: Listing) => {
+                    {mockedListings.map((listing: Property) => {
                       return (
-                        <Tr>
+                        <Tr key={listing.name}>
                           <Td>
                             <Text color={"blackAlpha.900"}>{listing.name}</Text>
                           </Td>
