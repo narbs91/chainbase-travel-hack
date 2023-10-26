@@ -13,7 +13,9 @@ const mockedListings: Array<Property> = [
         checkoutDate: "2023-11-10",
         imageUrl: "https://example.com/images/hotel1.jpg",
         description: "This is a description",
-        listed: true
+        listed: true,
+        id: "123",
+        lister: "54321"
     },
     {
         name: "Oceanview Resort",
@@ -23,7 +25,9 @@ const mockedListings: Array<Property> = [
         checkoutDate: "2023-11-18",
         imageUrl: "https://example.com/images/hotel2.jpg",
         description: "This is a description",
-        listed: true
+        listed: true,
+        id: "123",
+        lister: "54321"
     },
     {
         name: "Downtown Suites",
@@ -33,7 +37,9 @@ const mockedListings: Array<Property> = [
         checkoutDate: "2023-11-22",
         imageUrl: "https://example.com/images/hotel3.jpg",
         description: "This is a description",
-        listed: true
+        listed: true,
+        id: "123",
+        lister: "54321"
     },
     {
         name: "Mountain Escape Lodge",
@@ -43,7 +49,9 @@ const mockedListings: Array<Property> = [
         checkoutDate: "2023-11-30",
         imageUrl: "https://example.com/images/hotel4.jpg",
         description: "This is a description",
-        listed: true
+        listed: true,
+        id: "123",
+        lister: "54321"
     },
     {
         name: "Lakeside Inn",
@@ -53,7 +61,9 @@ const mockedListings: Array<Property> = [
         checkoutDate: "2023-12-05",
         imageUrl: "https://example.com/images/hotel5.jpg",
         description: "This is a description",
-        listed: true
+        listed: true,
+        id: "123",
+        lister: "54321"
     }
 ]
 

@@ -6,5 +6,7 @@ export interface Property {
     checkInDate: string,
     imageUrl: string,
     description: string,
-    listed: boolean
+    listed: boolean,
+    lister: string,
+    id: string
 }

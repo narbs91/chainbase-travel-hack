@@ -5,7 +5,9 @@ export default class AwardWalletClient {
     private USERNAME = process.env.AWARD_WALLET_USERNAME as string;
     private API_KEY = process.env.AWARD_WALLET_KEY as string;
     private key = `${this.USERNAME}:${this.API_KEY}`;
+
     private AUTH_HEADER_KEY = 'X-Authentication';
+    
     private BASE_URL = "https://service.awardwallet.com/email/json/v2"
     private PARSE_EMAIL = `${this.BASE_URL}/parseEmail`;
     private GET_PARSE_RESULT = `${this.BASE_URL}/getResults`;
