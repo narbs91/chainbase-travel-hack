@@ -1,56 +1,25 @@
-import { Property } from "@/app/types/property";
 import ChainBaseClient from "../../client/chainbase/chainbase.client";
-import { Attribute, ChainbaseNFTMetadata } from "../../client/chainbase/types/nft.metadata.type";
-import { ThirdwebSDK } from "@thirdweb-dev/sdk";
+import { Attribute, ChainbaseNFTMetadataResponse } from "../../client/chainbase/types/chainbase.nft.metadata.type";
+import { NFTMetadata, ThirdwebSDK } from "@thirdweb-dev/sdk";
+import { INFTService } from "./i.nft.service";
 
-const sdk = ThirdwebSDK.fromPrivateKey(process.env.PRIVATE_KEY as string, "polygon", {
+const sdk = ThirdwebSDK.fromPrivateKey(process.env.PRIVATE_KEY as string, "ethereum", {
     secretKey: process.env.THIRD_WEB_SECRET_KEY as string,
 });
 
-export class NFTService {
+export class NFTService implements INFTService {
     private CHAIN_ID = "137"; // Polygon
-    private CONTRACT_ADDRESS = process.env.NFT_CONTRACT_ADDRESS as string;
+    private TRAVEL_SMART_CONTRACT_ADDRESS = process.env.NFT_CONTRACT_ADDRESS as string;
 
     private chainbaseClient = new ChainBaseClient();
 
-    public getPropertyListings = async (limit: number, page: number): Promise<Property[]> => {
-        let properties: Property[] = []
-        try {
-            const nfts = await this.chainbaseClient.getNFTsByContractAddress(this.CHAIN_ID, this.CONTRACT_ADDRESS, page, limit);
-
-            nfts.forEach((element: ChainbaseNFTMetadata) => {
-                const property = this.mapNFTMetadataToProperty(element);
-
-                properties.push(property);
-            })
-        } catch (error) {
-            console.log(error)
-        }
-
-        return properties;
-    }
-
-    public getPropertyListing = async (id: string): Promise<Property> => {
-        let property = {} as Property;
-
-        try {
-            const nft = await this.chainbaseClient.getNFTByTokenId(id, this.CHAIN_ID, this.CONTRACT_ADDRESS);
-            property = this.mapNFTMetadataToProperty(nft);
-
-        } catch (error) {
-            console.log(error)
-        }
-
-        return property;
-    }
-
-    public createListing = async (receiver: string, metadata: any): Promise<string> => {
+    async mint(toAddress: string, metadata: NFTMetadata): Promise<string> {
         const contract = await sdk.getContract(
-            this.CONTRACT_ADDRESS
+            this.TRAVEL_SMART_CONTRACT_ADDRESS
         );
 
         const payload = {
-            to: receiver, // (Required) Who will receive the tokens
+            to: toAddress, // (Required) Who will receive the tokens
             quantity: 1,
             price: 0,
             metadata: metadata
@@ -70,15 +39,15 @@ export class NFTService {
         }
 
         return "";
-    };
+    }
 
-    public removeListing = async (tokenId: string): Promise<boolean> => {
+    async burn(tokenId: string): Promise<boolean> {
         const contract = await sdk.getContract(
-            this.CONTRACT_ADDRESS
+            this.TRAVEL_SMART_CONTRACT_ADDRESS
         );
 
         try {
-            const result = await contract.erc721.burn(tokenId);
+            const result = await contract.erc721.burn(Number(tokenId));
 
             // Return true if the burn was successful
             if (result.receipt && result.receipt.status === 1) {
@@ -92,24 +61,86 @@ export class NFTService {
         return false
     }
 
-    private mapNFTMetadataToProperty = (nft: ChainbaseNFTMetadata): Property => {
-        //TODO might have to revise after you do the NFT creation
-        return {
-            name: this.findAttribute(nft.metadata, "name"),
-            address: this.findAttribute(nft.metadata, "address"),
-            checkInDate: this.findAttribute(nft.metadata, "checkInDate"),
-            checkoutDate: this.findAttribute(nft.metadata, "checkoutDate"),
-            description: this.findAttribute(nft.metadata, "description"),
-            price: Number(this.findAttribute(nft.metadata, "price")),
-            imageUrl: nft.imageUri,
-            id: nft.tokenId,
-            lister: nft.owner
-        } as Property;
+    async getNFTMetaData(tokenId: string, contractAddress: string): Promise<NFTMetadata> {
+        let metadata = {} as NFTMetadata;
+
+        try {
+            const nft = await this.chainbaseClient.getNFTByTokenId(tokenId, this.CHAIN_ID, contractAddress);
+
+            if (!nft) {
+                metadata = this.mapChainbaseNFTMetadataToProperty(nft);
+            } else {
+                //fallback to thirdweb if chainbase doesn't have the data in real time
+                const contract = await sdk.getContract(
+                    contractAddress
+                );
+
+                metadata = (await contract.erc721.get(tokenId)).metadata;
+            }
+
+        } catch (error) {
+            console.log(error)
+        }
+
+        return metadata;
     }
 
-    private findAttribute = (attributes: Attribute[], key: string): string => {
-        const attribute = attributes.find(x => x.traitType === key);
+    async getMFTMetaDataForCollection(contractAddress: string, limit: number, page: number): Promise<NFTMetadata[]> {
+        let metadata: NFTMetadata[] = []
+        try {
+            const nfts = await this.chainbaseClient.getNFTsByContractAddress(this.CHAIN_ID, contractAddress, page, limit);
 
-        return attribute ? attribute.value : "";
+            if (nfts.length !== 0) {
+                nfts.forEach((element: ChainbaseNFTMetadataResponse) => {
+                    const property = this.mapChainbaseNFTMetadataToProperty(element);
+
+                    metadata.push(property);
+                })
+            } else {
+                //fallback to thirdweb if chainbase doesn't have the data in real time
+                const contract = await sdk.getContract(
+                    contractAddress
+                );
+
+                const queryParams = {
+                    count: limit,
+                    start: page === 1 ? 0 : limit + (page - 1),
+                };
+
+                const thirdWebNFTResponse = await contract.erc721.getAll(queryParams);
+                thirdWebNFTResponse.forEach((element) => {
+                    metadata.push(element.metadata);
+                })
+            }
+
+        } catch (error) {
+            console.log(error)
+        }
+
+        return metadata;
+    }
+
+    purchase(tokenId: string, price: string, purchaserAddress: string, receiverAddress: string): Promise<boolean> {
+        throw new Error("Method not implemented.");
+    }
+
+    private mapChainbaseNFTMetadataToProperty = (chainbaseNFTResponse: ChainbaseNFTMetadataResponse): NFTMetadata => {
+
+        let attributes: any[] = [];
+
+        chainbaseNFTResponse.metadata.forEach((element: Attribute) => {
+            const attribute = {
+                trait_type: element.traitType,
+                value: element.value
+            }
+
+            attributes.push(attribute);
+        })
+
+        return {
+            id: chainbaseNFTResponse.tokenId,
+            image: chainbaseNFTResponse.imageUri,
+            attributes: attributes
+        } as NFTMetadata;
     }
 }
