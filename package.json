@@ -16,6 +16,7 @@
     "@magic-sdk/admin": "^2.0.1",
     "@thirdweb-dev/sdk": "^4.0.7",
     "@types/validator": "^13.11.5",
+    "@upstash/redis": "^1.24.0",
     "ethers": "^5.7.2",
     "formik": "^2.4.5",
     "framer-motion": "^10.16.4",
