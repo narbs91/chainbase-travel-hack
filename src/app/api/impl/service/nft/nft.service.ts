@@ -3,7 +3,7 @@ import { Attribute, ChainbaseNFTMetadataResponse } from "../../client/chainbase/
 import { NFTMetadata, ThirdwebSDK } from "@thirdweb-dev/sdk";
 import { INFTService } from "./i.nft.service";
 
-const sdk = ThirdwebSDK.fromPrivateKey(process.env.PRIVATE_KEY as string, "ethereum", {
+const sdk = ThirdwebSDK.fromPrivateKey(process.env.PRIVATE_KEY as string, "polygon", {
     secretKey: process.env.THIRD_WEB_SECRET_KEY as string,
 });
 
