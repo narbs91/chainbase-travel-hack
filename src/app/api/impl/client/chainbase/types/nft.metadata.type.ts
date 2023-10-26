@@ -1,4 +1,4 @@
-export interface NFTMetadata {
+export interface ChainbaseNFTMetadata {
     tokenId: string,
     metadata: Attribute[],
     imageUri: string,
