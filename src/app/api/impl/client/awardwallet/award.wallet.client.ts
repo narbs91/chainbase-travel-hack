@@ -1,12 +1,14 @@
-import { postWithAuth } from "../rest.client";
+import { getWithAuth, postWithAuth } from "../rest.client";
 import { AwardWalletHotelBooking } from "./types/award.wallet.types";
 
 export default class AwardWalletClient {
-    private apiKey = `${process.env.AWARD_WALLET_USERNAME}:${process.env.AWARD_WALLET_KEY}`;
+    private USERNAME = process.env.AWARD_WALLET_USERNAME as string;
+    private API_KEY = process.env.AWARD_WALLET_KEY as string;
+    private key = `${this.USERNAME}:${this.API_KEY}`;
     private AUTH_HEADER_KEY = 'X-Authentication';
     private BASE_URL = "https://service.awardwallet.com/email/json/v2"
     private PARSE_EMAIL = `${this.BASE_URL}/parseEmail`;
-    private GET_PARSE_RESULT = `${this.BASE_URL}/getResults/`;
+    private GET_PARSE_RESULT = `${this.BASE_URL}/getResults`;
 
     public parseAndImportHotelBooking = async (email: string): Promise<AwardWalletHotelBooking[]> => {
         let importedHotelBookings: AwardWalletHotelBooking[] = [];
@@ -16,11 +18,11 @@ export default class AwardWalletClient {
                 email: email,
                 returnEmail: "headers"
             }
-            const queuedParseResponse = await postWithAuth(this.PARSE_EMAIL, postBody, this.AUTH_HEADER_KEY, this.apiKey);
+            const queuedParseResponse = await postWithAuth(this.PARSE_EMAIL, postBody, this.AUTH_HEADER_KEY, this.key);
 
             const requestId = queuedParseResponse['requestIds'][0];
 
-            const parsedEmail = await postWithAuth(`${this.GET_PARSE_RESULT}/${requestId}`, postBody, this.AUTH_HEADER_KEY, this.apiKey);
+            const parsedEmail = await getWithAuth(`${this.GET_PARSE_RESULT}/${requestId}`, this.AUTH_HEADER_KEY, this.key);
 
             importedHotelBookings = this.mapResponseToAwardWalletHotelBookings(parsedEmail);
 
@@ -34,7 +36,6 @@ export default class AwardWalletClient {
     private mapResponseToAwardWalletHotelBookings = (response: any): AwardWalletHotelBooking[] => {
         const awardWalletHotelBookings: AwardWalletHotelBooking[] = [];
         const bookings = response['itineraries'];
-
 
         bookings.forEach((element: any) => {
             const totalPrice = element['pricingInfo']['total'] as number;

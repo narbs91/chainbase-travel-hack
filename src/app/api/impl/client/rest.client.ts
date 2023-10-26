@@ -17,7 +17,7 @@ export const get = async (url: string): Promise<any> => {
 export const getWithAuth = async (url: string, authHeaderKey: string, authToken: string): Promise<any> => {
     const resp = await fetch(url, {
         method: 'get',
-        headers: { 'Content-Type': 'application/json', authHeaderKey: authToken }
+        headers: { 'Content-Type': 'application/json', [authHeaderKey]: authToken }
     });
 
     if (resp.ok) {
@@ -28,7 +28,7 @@ export const getWithAuth = async (url: string, authHeaderKey: string, authToken:
 
 };
 
-export const post = async (url: string, body: Object): Promise<any> => {
+export const post = async (url: string, body: any): Promise<any> => {
     const resp = await fetch(url, {
         method: 'post',
         body: JSON.stringify(body),
@@ -42,11 +42,13 @@ export const post = async (url: string, body: Object): Promise<any> => {
     throw new HTTPResponseError(resp);
 }
 
-export const postWithAuth = async (url: string, body: Object, authHeaderKey: string, authToken: string): Promise<any> => {
+export const postWithAuth = async (url: string, body: any, authHeaderKey: string, authToken: string): Promise<any> => {
     const resp = await fetch(url, {
         method: 'post',
         body: JSON.stringify(body),
-        headers: { 'Content-Type': 'application/json', authHeaderKey: authToken }
+        headers: {
+            'Content-Type': 'application/json', [authHeaderKey]: authToken
+        }
     });
 
     if (resp.ok) {
