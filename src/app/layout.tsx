@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import { Providers } from "./providers";
 import "./globals.css";
 import { GlobalContextProvider } from "./context/context";
+import Nav from "./components/nav";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,7 +21,10 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Providers>
-          <GlobalContextProvider>{children}</GlobalContextProvider>
+          <GlobalContextProvider>
+            <Nav></Nav>
+            {children}
+          </GlobalContextProvider>
         </Providers>
       </body>
     </html>
