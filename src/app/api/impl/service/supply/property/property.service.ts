@@ -27,6 +27,7 @@ export class PropertyService implements IPropertyService {
 
         return listing;
     }
+    
 
     async getPropertyListings(limit: number, page: number): Promise<Property[]> {
         let listings: Property[] = [];

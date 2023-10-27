@@ -3,13 +3,18 @@ import { Attribute, ChainbaseNFTMetadataResponse } from "../../client/chainbase/
 import { NFT, NFTMetadata, ThirdwebSDK } from "@thirdweb-dev/sdk";
 import { INFTService } from "./i.nft.service";
 import { NFTData } from "./model/nft.data";
+import { Polygon } from '@thirdweb-dev/chains';
 
-const sdk = ThirdwebSDK.fromPrivateKey(process.env.PRIVATE_KEY as string, "polygon", {
+
+//TODO: change depending on env
+const selectedChain = Polygon
+
+const sdk = ThirdwebSDK.fromPrivateKey(process.env.PRIVATE_KEY as string, selectedChain, {
     secretKey: process.env.THIRD_WEB_SECRET_KEY as string,
 });
 
 export class NFTService implements INFTService {
-    private CHAIN_ID = "137"; // Polygon
+    private CHAIN_ID = selectedChain.chainId.toString(); // Polygon
     private TRAVEL_SMART_CONTRACT_ADDRESS = process.env.NFT_CONTRACT_ADDRESS as string;
 
     private chainbaseClient = new ChainBaseClient();
@@ -68,6 +73,7 @@ export class NFTService implements INFTService {
         try {
             const nft = await this.chainbaseClient.getNFTByTokenId(tokenId, this.CHAIN_ID, contractAddress);
 
+            //fallback to thirdweb if chainbase doesn't have the data in real time
             if (!nft) {
                 nftData = this.mapChainbaseNFTMetadataToNFTData(nft);
 
@@ -84,13 +90,13 @@ export class NFTService implements INFTService {
                 const thirdWebResponse = await contract.erc721.get(tokenId);
                 nftData = this.mapNFTMetadataToNFTData(thirdWebResponse);
             }
-
         } catch (error) {
             console.log(error)
         }
 
         return nftData;
     }
+
 
     async getMFTMetaDataForCollection(contractAddress: string, limit: number, page: number): Promise<NFTData[]> {
         let nftData: NFTData[] = [];
@@ -101,7 +107,6 @@ export class NFTService implements INFTService {
             if (nfts.length !== 0) {
                 for (const nft of nfts) {
                     const data = this.mapChainbaseNFTMetadataToNFTData(nft);
-
                     // Check if owner is set; if not make separate call to fetch owner
                     if (!data.owner) {
                         const owner = await this.chainbaseClient.getNFTOwnerByTokenId(this.CHAIN_ID, contractAddress, data.tokenId);
@@ -124,10 +129,8 @@ export class NFTService implements INFTService {
                 const thirdWebNFTResponse = await contract.erc721.getAll(queryParams);
                 thirdWebNFTResponse.forEach((element) => {
                     const data = this.mapNFTMetadataToNFTData(element);
-                    nftData.push(data);
                 })
             }
-
         } catch (error) {
             console.log(error)
         }
