@@ -15,7 +15,8 @@ const mockedListings: Array<Property> = [
         description: "This is a description",
         listed: true,
         id: "123",
-        lister: "54321"
+        lister: "54321",
+        currency: "USD"
     },
     {
         name: "Oceanview Resort",
@@ -27,7 +28,8 @@ const mockedListings: Array<Property> = [
         description: "This is a description",
         listed: true,
         id: "123",
-        lister: "54321"
+        lister: "54321",
+        currency: "USD"
     },
     {
         name: "Downtown Suites",
@@ -39,7 +41,8 @@ const mockedListings: Array<Property> = [
         description: "This is a description",
         listed: true,
         id: "123",
-        lister: "54321"
+        lister: "54321",
+        currency: "USD"
     },
     {
         name: "Mountain Escape Lodge",
@@ -51,7 +54,8 @@ const mockedListings: Array<Property> = [
         description: "This is a description",
         listed: true,
         id: "123",
-        lister: "54321"
+        lister: "54321",
+        currency: "USD"
     },
     {
         name: "Lakeside Inn",
@@ -63,7 +67,8 @@ const mockedListings: Array<Property> = [
         description: "This is a description",
         listed: true,
         id: "123",
-        lister: "54321"
+        lister: "54321",
+        currency: "USD"
     }
 ]
 
