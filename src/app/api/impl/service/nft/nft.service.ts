@@ -1,14 +1,18 @@
 import ChainBaseClient from "../../client/chainbase/chainbase.client";
 import { Attribute, ChainbaseNFTMetadataResponse } from "../../client/chainbase/types/chainbase.nft.metadata.type";
-import { NFTMetadata, ThirdwebSDK } from "@thirdweb-dev/sdk";
+import { NFT, NFTMetadata, ThirdwebSDK } from "@thirdweb-dev/sdk";
 import { INFTService } from "./i.nft.service";
+import {BaseGoerli, Polygon} from '@thirdweb-dev/chains';
 
-const sdk = ThirdwebSDK.fromPrivateKey(process.env.PRIVATE_KEY as string, "polygon", {
+//TODO: change depending on env
+const selectedChain = Polygon
+
+const sdk = ThirdwebSDK.fromPrivateKey(process.env.PRIVATE_KEY as string, selectedChain, {
     secretKey: process.env.THIRD_WEB_SECRET_KEY as string,
 });
 
 export class NFTService implements INFTService {
-    private CHAIN_ID = "137"; // Polygon
+    private CHAIN_ID = selectedChain.chainId.toString(); // Polygon
     private TRAVEL_SMART_CONTRACT_ADDRESS = process.env.NFT_CONTRACT_ADDRESS as string;
 
     private chainbaseClient = new ChainBaseClient();
@@ -63,21 +67,26 @@ export class NFTService implements INFTService {
 
     async getNFTMetaData(tokenId: string, contractAddress: string): Promise<NFTMetadata> {
         let metadata = {} as NFTMetadata;
+        let nft;
+        try {
+            nft = await this.chainbaseClient.getNFTByTokenId(tokenId, this.CHAIN_ID, contractAddress);
+
+            if (nft) {
+                metadata = this.mapChainbaseNFTMetadataToProperty(nft);
+            } 
+        } catch (error) {
+            console.log(error)
+        }
 
         try {
-            const nft = await this.chainbaseClient.getNFTByTokenId(tokenId, this.CHAIN_ID, contractAddress);
-
+            //fallback to thirdweb if chainbase doesn't have the data in real time
             if (!nft) {
-                metadata = this.mapChainbaseNFTMetadataToProperty(nft);
-            } else {
-                //fallback to thirdweb if chainbase doesn't have the data in real time
                 const contract = await sdk.getContract(
                     contractAddress
                 );
 
                 metadata = (await contract.erc721.get(tokenId)).metadata;
             }
-
         } catch (error) {
             console.log(error)
         }
@@ -85,10 +94,11 @@ export class NFTService implements INFTService {
         return metadata;
     }
 
-    async getMFTMetaDataForCollection(contractAddress: string, limit: number, page: number): Promise<NFTMetadata[]> {
+    async getMFTMetaDataForCollection(contractAddress: string, limit: number, page: number): Promise<NFTMetadata[]>  {
         let metadata: NFTMetadata[] = []
+        let nfts = []
         try {
-            const nfts = await this.chainbaseClient.getNFTsByContractAddress(this.CHAIN_ID, contractAddress, page, limit);
+            nfts = await this.chainbaseClient.getNFTsByContractAddress(this.CHAIN_ID, contractAddress, page, limit);
 
             if (nfts.length !== 0) {
                 nfts.forEach((element: ChainbaseNFTMetadataResponse) => {
@@ -96,8 +106,14 @@ export class NFTService implements INFTService {
 
                     metadata.push(property);
                 })
-            } else {
-                //fallback to thirdweb if chainbase doesn't have the data in real time
+            }
+        } catch (error) {
+            console.log(error)
+        }
+
+        try {
+            //fallback to thirdweb if chainbase doesn't have the data in real time
+            if (nfts.length === 0) {
                 const contract = await sdk.getContract(
                     contractAddress
                 );
@@ -106,13 +122,16 @@ export class NFTService implements INFTService {
                     count: limit,
                     start: page === 1 ? 0 : limit + (page - 1),
                 };
-
-                const thirdWebNFTResponse = await contract.erc721.getAll(queryParams);
-                thirdWebNFTResponse.forEach((element) => {
+                const num = await contract.erc721.totalCount()
+                
+                if (num.toNumber() > 0) {
+                    const thirdWebNFTResponse = await contract.erc721.getAll();
+                    thirdWebNFTResponse.forEach((element) => {
                     metadata.push(element.metadata);
                 })
+                }
+                
             }
-
         } catch (error) {
             console.log(error)
         }
