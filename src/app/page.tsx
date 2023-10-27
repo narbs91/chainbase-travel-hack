@@ -11,9 +11,6 @@ import {
 } from "@chakra-ui/react";
 
 export default function Home() {
-  const test = async () => {
-    await fetch("/api/search?limit=10&page=1");
-  };
   return (
     <PageLayout>
       <Container maxW={{ base: "sm", sm: "xl" }} padding="20px">
@@ -38,7 +35,7 @@ export default function Home() {
           marginTop="-65px"
         >
           <VStack marginBottom="130px" marginTop="50px">
-            <Button onClick={test}>Login with Magic</Button>
+            <Button>Login with Magic</Button>
           </VStack>
         </Container>
       </chakra.main>
