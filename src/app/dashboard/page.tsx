@@ -24,10 +24,16 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react";
+import { useRouter } from "next/navigation";
 
 export default function Dashboard() {
   const { user } = useGlobalContext();
   const { colorMode } = useColorMode();
+  const router = useRouter();
+
+  if (!user) {
+    router.push('/login')
+  }
 
   //TODO
   return (
@@ -38,7 +44,7 @@ export default function Dashboard() {
         justify={"center"}
         bg={useColorModeValue("gray.50", "gray.800")}
       >
-        <Stack spacing={8} mx={"auto"} minW={"full"} maxW={"lg"} py={12} px={6}>
+        <Stack spacing={8} mx={"auto"} minW={"full"} maxW={"lg"} py={2} px={6}>
           <Box
             rounded={"lg"}
             bg={useColorModeValue("white", "gray.700")}
