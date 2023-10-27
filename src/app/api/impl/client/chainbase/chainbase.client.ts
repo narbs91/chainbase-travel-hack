@@ -9,6 +9,7 @@ export default class ChainBaseClient {
     private BASE_URL = "https://api.chainbase.online/v1"
     private GET_NFT_META_BY_TOKEN_ID_URL = `${this.BASE_URL}/nft/metadata`;
     private GET_BULK_NFT_META = `${this.BASE_URL}/nft/collection/items`;
+    private GET_NFT_OWNER_BY_TOKEN_ID = `${this.BASE_URL}/nft/owner`;
 
     public getNFTByTokenId = async (tokenId: string, chainId: string, contractAddress: string): Promise<ChainbaseNFTMetadataResponse> => {
         let nftMetadata = {} as ChainbaseNFTMetadataResponse;
@@ -48,10 +49,24 @@ export default class ChainBaseClient {
         return nftMetadata
     }
 
+    public getNFTOwnerByTokenId = async (chainId: string, contractAddress: string, tokenId: string): Promise<string> => {
+
+        try {
+            const request = `${this.GET_NFT_OWNER_BY_TOKEN_ID}?chain_id=${chainId}&contract_address=${contractAddress}&token_id=${tokenId}`;
+            const nftResponse = await getWithAuth(request, this.AUTH_HEADER_KEY, this.API_KEY);
+
+            return nftResponse['data']
+        } catch (error) {
+            console.log(error)
+        }
+
+        return ""
+    }
+
     private mapResponseToNFTMetadata = (response: any): ChainbaseNFTMetadataResponse => {
         let attributes: Attribute[] = [];
 
-        response['metadata']['attributes'].forEach((element: any) => {
+        response['traits'].forEach((element: any) => {
             const attribute = {
                 traitType: element['trait_type'],
                 value: element['value']
@@ -61,6 +76,7 @@ export default class ChainBaseClient {
         })
 
         return {
+            name: response['name'],
             tokenId: response['token_id'],
             owner: response['owner'],
             metadata: attributes,
