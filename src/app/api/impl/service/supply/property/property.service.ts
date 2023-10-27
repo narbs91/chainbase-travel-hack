@@ -3,6 +3,7 @@ import { IPropertyService } from "./i.property.service";
 import { NFTMetadata } from "@thirdweb-dev/sdk";
 import { RedisCacheService } from "../../cache/redis/redis.cache.service";
 import { NFTService } from "../../nft/nft.service";
+import { NFTData } from "../../nft/model/nft.data";
 
 export class PropertyService implements IPropertyService {
     private TRAVEL_SMART_CONTRACT_ADDRESS = process.env.NFT_CONTRACT_ADDRESS as string;
@@ -106,7 +107,7 @@ export class PropertyService implements IPropertyService {
         await this.cacheService.appendToSet(key, JSON.stringify(updatedProperty));
     }
 
-    private mapNFTMetadataToProperty = (nft: NFTMetadata): Property => {
+    private mapNFTMetadataToProperty = (nft: NFTData): Property => {
         let property = {} as Property;
 
         if (nft && nft.attributes) {
@@ -119,9 +120,10 @@ export class PropertyService implements IPropertyService {
                 description: this.findAttribute(attributesArray, "description"),
                 price: Number(this.findAttribute(attributesArray, "price")),
                 currency: this.findAttribute(attributesArray, "currency"),
-                imageUrl: nft.imageUri,
+                imageUrl: nft.image,
                 id: nft.tokenId,
                 lister: nft.owner,
+                listed: true
 
             } as Property;
         }
@@ -130,7 +132,7 @@ export class PropertyService implements IPropertyService {
     }
 
     private findAttribute = (attributes: any[], key: string): string => {
-        const attribute = attributes.find(x => x.traitType === key);
+        const attribute = attributes.find(x => x.trait_type === key);
 
         return attribute ? attribute.value : "";
     }
