@@ -3,11 +3,11 @@ import { Attribute, ChainbaseNFTMetadataResponse } from "../../client/chainbase/
 import { NFT, NFTMetadata, ThirdwebSDK } from "@thirdweb-dev/sdk";
 import { INFTService } from "./i.nft.service";
 import { NFTData } from "./model/nft.data";
-import { Polygon } from '@thirdweb-dev/chains';
+import { Polygon, BaseGoerli } from '@thirdweb-dev/chains';
 
 
 //TODO: change depending on env
-const selectedChain = BaseGoerli
+const selectedChain = Polygon
 
 const sdk = ThirdwebSDK.fromPrivateKey(process.env.PRIVATE_KEY as string, selectedChain, {
     secretKey: process.env.THIRD_WEB_SECRET_KEY as string,
