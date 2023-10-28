@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import {
   Text,
@@ -10,6 +12,7 @@ import {
   CardFooter,
   Image,
 } from "@chakra-ui/react";
+import { useRouter } from "next/navigation";
 
 const SearchResultCard = ({
   name,
@@ -17,20 +20,26 @@ const SearchResultCard = ({
   imageUrl,
   checkInDate,
   checkoutDate,
-  description,
+  id,
 }: {
   name: string;
   price: number;
   imageUrl: string;
   checkInDate: string;
   checkoutDate: string;
-  description: string;
+  id: string;
 }) => {
+  const router = useRouter();
+
+  const goToDetailsPage = async () => {
+    router.push(`/property/details/${id}`);
+  };
+
   return (
-  <Card maxW="100%" direction="column">
+    <Card maxW="100%" direction="column">
       <CardBody>
         <Image
-          width={'100%'}
+          width={"100%"}
           src={imageUrl || "./hotel_placeholder.png"}
           alt="Green double couch with wooden legs"
           borderRadius="lg"
@@ -46,7 +55,7 @@ const SearchResultCard = ({
         <Text color="blue.600" fontSize="2xl">
           ${price}
         </Text>
-        <Button variant="solid" colorScheme="blue">
+        <Button variant="solid" colorScheme="blue" onClick={goToDetailsPage}>
           Select
         </Button>
       </CardFooter>

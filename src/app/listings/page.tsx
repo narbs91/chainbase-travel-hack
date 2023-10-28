@@ -1,4 +1,4 @@
-import { Text, SimpleGrid, Stack, Flex, list, VStack } from "@chakra-ui/react";
+import { Text, SimpleGrid, Stack, Flex } from "@chakra-ui/react";
 import { PropertyService } from "../api/impl/service/supply/property/property.service";
 import SearchResultCard from "./search/search-result-card";
 import DataLoadErrorComponent from "./search/data-not-loaded";
@@ -22,13 +22,13 @@ function renderCards(listings: Property[]) {
           imageUrl={listing.imageUrl}
           checkInDate={listing.checkInDate}
           checkoutDate={listing.checkoutDate}
-          description={listing.description}
+          id={listing.id}
         />
       );
     });
   } catch (e) {
     return (
-      <Text color={'black'}>
+      <Text color={"black"}>
         Seems like we are having some issues, please wait a moment and try again
       </Text>
     );
