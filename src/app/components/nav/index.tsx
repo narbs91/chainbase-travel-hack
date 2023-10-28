@@ -41,7 +41,7 @@ export default function Nav() {
             color="black"
             title="nav-gpc-home-button"
           >
-            ReBookT
+            ReBookt
           </chakra.span>
         </HStack>
 

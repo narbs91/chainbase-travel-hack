@@ -10,7 +10,13 @@ export default function Loading() {
         color="blue.500"
         size="xl"
       />
-      <Text mt={4} fontSize="xl" fontWeight="bold" color={"black"}>
+      <Text
+        mt={4}
+        fontSize={{ base: "md", sm: "lg", md: "xl" }}
+        textAlign={"center"}
+        fontWeight="bold"
+        color={"black"}
+      >
         One moment while we grab the details about the stay!
       </Text>
     </Center>

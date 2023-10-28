@@ -9,6 +9,8 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { PropertyService } from "@/app/api/impl/service/supply/property/property.service";
+import PropertyDetailDataLoadErrorComponent from "../../data-not-loaded";
+import _ from "lodash";
 
 async function getData(id: string) {
   const propertyService = new PropertyService();
@@ -19,6 +21,15 @@ async function getData(id: string) {
 
 const HotelDetailsPage = async ({ params }: { params: { id: string } }) => {
   const property = await getData(params.id);
+  console.log(typeof property);
+
+  if (_.isEmpty(property)) {
+    return (
+      <>
+        <PropertyDetailDataLoadErrorComponent />
+      </>
+    );
+  }
 
   return (
     <Box p={[2, 4, 6]} maxWidth="1200px" margin="0 auto" bg={"gray.100"}>
@@ -29,7 +40,7 @@ const HotelDetailsPage = async ({ params }: { params: { id: string } }) => {
         borderRadius="md"
         objectFit="cover"
         mb={6}
-        width={"1240px"}
+        width={"1200px"}
         height={"400px"}
       />
 

@@ -40,8 +40,8 @@ const SearchResultCard = ({
       <CardBody>
         <Image
           width={"100%"}
-          src={imageUrl || "./hotel_placeholder.png"}
-          alt="Green double couch with wooden legs"
+          src={imageUrl || "https://via.placeholder.com/500x300"}
+          alt="Hotel Image"
           borderRadius="lg"
         />
         <Stack mt="6" spacing="3">
@@ -51,11 +51,20 @@ const SearchResultCard = ({
         </Stack>
       </CardBody>
       <Divider />
-      <CardFooter minW={"full"} justifyContent="space-between">
-        <Text color="blue.600" fontSize="2xl">
+      <CardFooter
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+      >
+        <Text color="blue.600" fontSize={["lg", "xl", "2xl"]}>
           ${price}
         </Text>
-        <Button variant="solid" colorScheme="blue" onClick={goToDetailsPage}>
+        <Button
+          size={{ base: "sm", md: "md" }}
+          variant="solid"
+          colorScheme="blue"
+          onClick={goToDetailsPage}
+        >
           Select
         </Button>
       </CardFooter>
