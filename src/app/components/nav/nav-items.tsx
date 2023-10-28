@@ -73,6 +73,18 @@ export default function NavItems() {
           Shop
         </Button>
       </Link>
+      {user?.email && (
+        <Link>
+          <Button
+            color="black"
+            variant="ghost"
+            title="nav-search-button"
+            onClick={() => router.push("/dashboard")}
+          >
+            Dashboard
+          </Button>
+        </Link>
+      )}
       {userProfileButton}
     </>
   );
