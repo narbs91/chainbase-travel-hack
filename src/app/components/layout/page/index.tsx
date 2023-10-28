@@ -14,6 +14,7 @@ const PageLayout = ({ children }: { children?: any }): JSX.Element => {
         flexDirection="column"
         alignItems="center"
         minHeight="100vh"
+        bg="white"
       >
         {children}
       </Stack>

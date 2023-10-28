@@ -20,7 +20,7 @@ export default function LoginPage() {
       >
         Login or create account
       </Heading>
-      <Text textAlign={"center"}>
+      <Text color="black" textAlign={"center"}>
         Creating an account will allow you to buy a hotel stay and let you list your own bookings for sale on the ReBookT marketplace!
       </Text>
       <Container maxW={{ base: "sm", sm: "xl" }} padding="20px">

@@ -27,7 +27,7 @@ export default function Home() {
               bgClip="text"
               bgGradient={"linear(135deg, #6699FF 0%, #FF3366 100%)"}
             >
-              ReBookT
+              ReBookt
             </chakra.span>
           </Heading>
           <VStack spacing={5}>
@@ -39,10 +39,10 @@ export default function Home() {
             />
           </VStack>
         </VStack>
-        <VStack>
-          <Text textAlign={"center"}>
+        <VStack padding={2}>
+          <Heading as="h2" color="black" textAlign={"center"}>
             We let you buy and sell hotel bookings on a secondary market
-          </Text>
+          </Heading>
         </VStack>
       </Container>
       <chakra.main>
