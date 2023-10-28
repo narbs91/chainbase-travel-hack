@@ -125,7 +125,6 @@ export default function ListingsTable({
                                     pointerEvents='none'
                                     color='gray.300'
                                     fontSize='1.2em'
-                                    children='$'
                                     />
                                     <Input value={listing.price} placeholder='Enter amount'  onChange={handleChange} />
                                 </InputGroup>

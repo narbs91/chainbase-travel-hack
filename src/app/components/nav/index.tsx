@@ -18,7 +18,7 @@ export default function Nav() {
       backgroundColor="white"
       minWidth="100vw"
       title="gpc-nav"
-      minH="10vh"
+      minH="5vh"
     >
       <Flex
         alignItems="center"
