@@ -56,7 +56,9 @@ const LoginForm = (): JSX.Element => {
                 <FormControl
                   isInvalid={form.errors.email && form.touched.email}
                 >
-                  <FormLabel>Enter your Email Address</FormLabel>
+                  <FormLabel color={"black"}>
+                    Enter your Email Address
+                  </FormLabel>
                   <Input type="email" {...field} placeholder="email" />
                   <FormErrorMessage>{form.errors.email}</FormErrorMessage>
                 </FormControl>
@@ -64,7 +66,7 @@ const LoginForm = (): JSX.Element => {
             </Field>
             <Button
               mt={4}
-              colorScheme="teal"
+              colorScheme="blue"
               isLoading={props.isSubmitting}
               type="submit"
               isDisabled={disableSubmit}
