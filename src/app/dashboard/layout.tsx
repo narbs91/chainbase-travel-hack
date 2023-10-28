@@ -1,6 +1,4 @@
 "use client"
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import Dashboard from "./page";
 import { useEffect } from "react";
 import { useGlobalContext } from "../context/context";

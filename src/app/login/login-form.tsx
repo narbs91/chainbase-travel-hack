@@ -59,7 +59,7 @@ const LoginForm = (): JSX.Element => {
                   <FormLabel color={"black"}>
                     Enter your Email Address
                   </FormLabel>
-                  <Input type="email" {...field} placeholder="email" />
+                  <Input type="email" {...field} placeholder="email" color={"black"}/>
                   <FormErrorMessage>{form.errors.email}</FormErrorMessage>
                 </FormControl>
               )}
