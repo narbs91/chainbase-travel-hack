@@ -27,7 +27,7 @@ export default function NavItems() {
             onClick={logout}
             color="black"
             variant="ghost"
-            title="nav-search-button"
+            title="nav-logout-button"
           >
             Logout
           </Button>
@@ -41,7 +41,7 @@ export default function NavItems() {
           <Button
             color="black"
             variant="ghost"
-            title="nav-search-button"
+            title="nav-login-button"
             onClick={() => router.push("/login")}
           >
             Login
@@ -67,6 +67,16 @@ export default function NavItems() {
         <Button
           color="black"
           variant="ghost"
+          title="nav-about-button"
+          onClick={() => router.push("/about")}
+        >
+          About
+        </Button>
+      </Link>
+      <Link>
+        <Button
+          color="black"
+          variant="ghost"
           title="nav-search-button"
           onClick={() => router.push("/listings")}
         >
@@ -78,7 +88,7 @@ export default function NavItems() {
           <Button
             color="black"
             variant="ghost"
-            title="nav-search-button"
+            title="nav-dashboard-button"
             onClick={() => router.push("/dashboard")}
           >
             Dashboard
