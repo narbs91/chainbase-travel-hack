@@ -10,6 +10,7 @@ import {
   CloseButton,
 } from "@chakra-ui/react";
 import NavItems from "./nav-items";
+import { AiOutlineMenu } from "react-icons/ai";
 
 export default function MobileNav() {
   const bg = useColorModeValue("white", "white");
@@ -23,6 +24,7 @@ export default function MobileNav() {
         fontSize="20px"
         color="black"
         variant="ghost"
+        icon={<AiOutlineMenu />}
         onClick={onOpen}
         title="mobile-nav-open-button"
       />
@@ -42,7 +44,7 @@ export default function MobileNav() {
         rounded="sm"
         shadow="sm"
         zIndex="99"
-        color="white"
+        color="black"
       >
         <CloseButton
           aria-label="Close menu"

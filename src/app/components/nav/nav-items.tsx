@@ -18,9 +18,9 @@ export default function NavItems() {
     router.push("/login");
   };
 
-  let button;
+  let userProfileButton;
   if (user?.email) {
-    button = (
+    userProfileButton = (
       <>
         <Link>
           <Button
@@ -35,32 +35,45 @@ export default function NavItems() {
       </>
     );
   } else {
-    button = (
+    userProfileButton = (
       <>
         <Link>
-        <Button
-          color="black"
-          variant="ghost"
-          title="nav-search-button"
-          onClick={() => router.push("/login")}
-        >
-          Login
-        </Button>
+          <Button
+            color="black"
+            variant="ghost"
+            title="nav-search-button"
+            onClick={() => router.push("/login")}
+          >
+            Login
+          </Button>
         </Link>
       </>
     );
   }
 
-  return <>
-    <Link>
+  return (
+    <>
+      <Link>
         <Button
           color="black"
           variant="ghost"
-          title="nav-search-button"
+          title="nav-home-button"
           onClick={() => router.push("/")}
         >
           Home
         </Button>
-        </Link>
-  {button}</>;
+      </Link>
+      <Link>
+        <Button
+          color="black"
+          variant="ghost"
+          title="nav-search-button"
+          onClick={() => router.push("/listings")}
+        >
+          Shop
+        </Button>
+      </Link>
+      {userProfileButton}
+    </>
+  );
 }

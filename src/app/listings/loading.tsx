@@ -6,12 +6,12 @@ export default function Loading() {
       <Spinner
         thickness="4px"
         speed="0.65s"
-        emptyColor="grey.200"
+        emptyColor="gray.200"
         color="blue.500"
         size="xl"
       />
       <Text mt={4} fontSize="xl" fontWeight="bold" color={"black"}>
-        Hang tight while we find you some great weekend get away spots!
+        Hang tight while we find you some great get away spots!
       </Text>
     </Center>
   );

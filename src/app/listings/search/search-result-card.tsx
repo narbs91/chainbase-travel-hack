@@ -11,6 +11,9 @@ import {
   Divider,
   CardFooter,
   VStack,
+  Image,
+  Box,
+  ButtonGroup,
 } from "@chakra-ui/react";
 
 const SearchResultCard = ({
@@ -29,7 +32,41 @@ const SearchResultCard = ({
   description: string;
 }) => {
   return (
-    <Card key={"temp"} w={"40vw"}>
+  <Card maxW="100%" direction="column">
+      <CardBody>
+        <Image
+          width={'100%'}
+          src={imageUrl || "./hotel_placeholder.png"}
+          alt="Green double couch with wooden legs"
+          borderRadius="lg"
+        />
+        <Stack mt="6" spacing="3">
+          <Heading size="md">{name}</Heading>
+          <Text>Check In: {new Date(checkInDate).toDateString()}</Text>
+          <Text>Check Out: {new Date(checkoutDate).toDateString()}</Text>
+        </Stack>
+      </CardBody>
+      <Divider />
+      <CardFooter minW={"full"} justifyContent="space-between">
+        <Text color="blue.600" fontSize="2xl">
+          ${price}
+        </Text>
+        <Button variant="solid" colorScheme="blue">
+          Select
+        </Button>
+      </CardFooter>
+    </Card>
+  );
+};
+
+export default SearchResultCard;
+
+{
+  /* <Card
+      direction={"column"}
+      overflow="hidden"
+      variant="outline"
+    >
       <CardHeader backgroundPosition={"center center"}>
         <Stack
           minW={"full"}
@@ -60,8 +97,8 @@ const SearchResultCard = ({
         </Stack>
       </CardHeader>
       <CardBody
-        minH={"20vh"}
-        backgroundImage={"https://via.placeholder.com/500"}
+        minH={"30vh"}
+        backgroundImage={imageUrl || "https://via.placeholder.com/500"}
         backgroundSize={"cover"}
         backgroundPosition={"center center"}
       />
@@ -69,16 +106,40 @@ const SearchResultCard = ({
       <CardFooter>
         <Stack minW={"full"} direction={"row"} justifyContent="space-between">
           <VStack>
-            <Text as="b"> {description} </Text>
+            <Text> {description} </Text>
           </VStack>
 
           <Flex justifyContent="flex-end">
-            <Button colorScheme="teal">Select</Button>
+            <Button colorScheme="blue">Select</Button>
           </Flex>
         </Stack>
       </CardFooter>
-    </Card>
-  );
-};
+    </Card> */
+}
 
-export default SearchResultCard;
+{
+  /* <Card maxW="100%" direction="column">
+      <CardBody>
+        <Image
+          width={'100%'}
+          src={imageUrl || "./hotel_placeholder.png"}
+          alt="Green double couch with wooden legs"
+          borderRadius="lg"
+        />
+        <Stack mt="6" spacing="3">
+          <Heading size="md">{name}</Heading>
+          <Text>Check In: {new Date(checkInDate).toDateString()}</Text>
+          <Text>Check Out: {new Date(checkoutDate).toDateString()}</Text>
+        </Stack>
+      </CardBody>
+      <Divider />
+      <CardFooter minW={"full"} justifyContent="space-between">
+        <Text color="blue.600" fontSize="2xl">
+          ${price}
+        </Text>
+        <Button variant="solid" colorScheme="blue">
+          Select
+        </Button>
+      </CardFooter>
+    </Card> */
+}

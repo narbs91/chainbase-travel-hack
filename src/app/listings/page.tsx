@@ -1,23 +1,18 @@
-import {
-  Text,
-  SimpleGrid,
-  Stack,
-  Flex,
-} from "@chakra-ui/react";
+import { Text, SimpleGrid, Stack, Flex, list, VStack } from "@chakra-ui/react";
 import { PropertyService } from "../api/impl/service/supply/property/property.service";
 import SearchResultCard from "./search/search-result-card";
 import DataLoadErrorComponent from "./search/data-not-loaded";
+import { Property } from "../types/property";
 
 async function getData() {
   const propertyService = new PropertyService();
-  const listing = await propertyService.getPropertyListings(20, 1);
+  const listings = await propertyService.getPropertyListings(20, 1);
 
-  return listing;
+  return listings;
 }
 
-async function renderCards() {
+function renderCards(listings: Property[]) {
   try {
-    const listings = await getData();
     return listings.map((listing) => {
       return (
         <SearchResultCard
@@ -33,7 +28,7 @@ async function renderCards() {
     });
   } catch (e) {
     return (
-      <Text>
+      <Text color={'black'}>
         Seems like we are having some issues, please wait a moment and try again
       </Text>
     );
@@ -41,7 +36,16 @@ async function renderCards() {
 }
 
 export default async function Listings() {
-  // TODO:  Add fallback for case when data fails to load
+  const listings = await getData();
+
+  if (listings.length < 1) {
+    return (
+      <>
+        <DataLoadErrorComponent />
+      </>
+    );
+  }
+
   return (
     <>
       <Flex
@@ -58,11 +62,8 @@ export default async function Listings() {
           align={"center"}
           py={2}
         >
-          <SimpleGrid
-            spacing={4}
-            templateColumns="repeat(auto-fill, minmax(200px, 1fr))"
-          >
-            {await renderCards()}
+          <SimpleGrid spacing={10} columns={1}>
+            {renderCards(listings)}
           </SimpleGrid>
         </Stack>
       </Flex>
