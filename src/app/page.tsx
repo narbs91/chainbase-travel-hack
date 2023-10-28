@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import PageLayout from "./components/layout/page";
 import {
   Container,
@@ -8,9 +9,15 @@ import {
   chakra,
   Text,
   Button,
+  Image,
 } from "@chakra-ui/react";
 
 export default function Home() {
+  const router = useRouter()
+
+  const shopNow = () => {
+    router.push("/listings")
+  }
   return (
     <PageLayout>
       <Container maxW={{ base: "sm", sm: "xl" }} padding="20px">
@@ -20,12 +27,22 @@ export default function Home() {
               bgClip="text"
               bgGradient={"linear(135deg, #6699FF 0%, #FF3366 100%)"}
             >
-              Title of our app
+              ReBookT
             </chakra.span>
           </Heading>
+          <VStack spacing={5}>
+            <Image
+              title="rebookt-logo"
+              src="/rebookt_logo.png"
+              alt="ReBookT logo"
+              width={300}
+            />
+          </VStack>
         </VStack>
         <VStack>
-          <Text>This is a one liner of what our app does</Text>
+          <Text textAlign={"center"}>
+            We let you buy and sell hotel bookings on a secondary market
+          </Text>
         </VStack>
       </Container>
       <chakra.main>
@@ -35,7 +52,14 @@ export default function Home() {
           marginTop="-65px"
         >
           <VStack marginBottom="130px" marginTop="50px">
-            <Button>Login with Magic</Button>
+            <Button
+              bgClip="bg"
+              bgGradient={"linear(135deg, #6699FF 0%, #FF3366 100%)"}
+              color={"white"}
+              onClick={shopNow}
+            >
+              Shop Now
+            </Button>
           </VStack>
         </Container>
       </chakra.main>

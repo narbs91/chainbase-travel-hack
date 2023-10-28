@@ -4,8 +4,6 @@ import React from "react";
 import { chakra, Flex, HStack, Avatar, Link, Image } from "@chakra-ui/react";
 import MobileNav from "./mobile-nav";
 import NavItems from "./nav-items";
-import { useGlobalContext } from "@/app/context/context";
-import { json } from "stream/consumers";
 
 /**
  * Implementation inspired from the developer dao website
@@ -31,8 +29,8 @@ export default function Nav() {
       >
         <HStack as="a" display="flex" alignItems="center">
           <Avatar
-            src="./gpc_social_logo.png"
-            title="nav-gpc-icon"
+            src="./rebookt_logo.png"
+            title="rebookt-icon"
             border={"none"}
           />
 
@@ -43,7 +41,7 @@ export default function Nav() {
             color="black"
             title="nav-gpc-home-button"
           >
-            Travel app
+            ReBookT
           </chakra.span>
         </HStack>
 
