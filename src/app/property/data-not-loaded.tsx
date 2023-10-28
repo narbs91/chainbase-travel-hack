@@ -3,10 +3,10 @@ import React from "react";
 import { Text, Center, Button } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 
-const DataLoadErrorComponent = () => {
+const PropertyDetailDataLoadErrorComponent = () => {
   const router = useRouter();
-  const refresh = () => {
-    router.refresh();
+  const goToSearch = () => {
+    router.push("/listings");
   };
   return (
     <Center height="100vh" flexDirection="column">
@@ -15,18 +15,16 @@ const DataLoadErrorComponent = () => {
         fontSize={{ base: "md", sm: "lg", md: "xl" }}
         fontWeight="bold"
         color="gray.600"
-        textAlign={"center"}
+        textAlign={'center'}
       >
-        Oops! We couldnt load the data.
+        Oops! We could not load the property data. It either does not exist or has
+        just sold. Please try another listing
       </Text>
-      <Text mt={2} fontSize="md" color="gray.500">
-        Please wait a moment and try again.
-      </Text>
-      <Button mt={4} colorScheme="blue" onClick={refresh}>
-        Retry
+      <Button mt={4} colorScheme="blue" onClick={goToSearch}>
+        Search Listings
       </Button>
     </Center>
   );
 };
 
-export default DataLoadErrorComponent;
+export default PropertyDetailDataLoadErrorComponent;

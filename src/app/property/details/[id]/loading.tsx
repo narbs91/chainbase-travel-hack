@@ -13,11 +13,11 @@ export default function Loading() {
       <Text
         mt={4}
         fontSize={{ base: "md", sm: "lg", md: "xl" }}
+        textAlign={"center"}
         fontWeight="bold"
         color={"black"}
-        textAlign={"center"}
       >
-        Hang tight while we find you some great get away spots!
+        One moment while we grab the details about the stay!
       </Text>
     </Center>
   );
