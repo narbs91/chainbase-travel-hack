@@ -1,9 +1,8 @@
 "use client";
+import { useEffect } from "react";
 import { useGlobalContext } from "../context/context";
 import { Property } from "../types/property";
-
-//Temp
-import mockedListings from "./mockListing.mock";
+import useSWR from "swr";
 
 import {
   Flex,
@@ -23,17 +22,63 @@ import {
   Th,
   Thead,
   Tr,
+  Skeleton,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  useDisclosure,
+  Spinner,
 } from "@chakra-ui/react";
-import { useRouter } from "next/navigation";
+
+import { UserPropertiesResponse } from "../api/impl/types/httpResponses";
+import ListingsTable from "../components/listing-table";
+
+function ModalView(props: any) {
+  if (props.success) {
+    if (props.isLoading) {
+      return <Spinner></Spinner>;
+    } else {
+      return <Text>Are you sure?</Text>;
+    }
+  } else {
+    return <Text>Success!</Text>;
+  }
+}
 
 export default function Dashboard() {
   const { user } = useGlobalContext();
   const { colorMode } = useColorMode();
-  const router = useRouter();
+  let { isOpen, onOpen, onClose } = useDisclosure();
 
-  if (!user) {
-    router.push('/login')
+  let loading = false;
+  let success = false;
+
+  async function fetcher<JSON = any>(url: string): Promise<JSON> {
+    const res = await fetch(url);
+    return res.json();
   }
+
+  async function importUnlistedProperties() {
+    loading = true;
+    const res = fetch(`/api/import`);
+
+    const unlistedProperties = await (await res).json();
+
+    if (unlistedProperties) {
+      loading = false;
+      success = true;
+      user.unlistedBookings = unlistedProperties.bookings;
+    }
+  }
+
+  const { data, error, isLoading } = useSWR<UserPropertiesResponse>(
+    `/api/listings?walletAddress=${user.walletAddress}`,
+    fetcher
+  );
 
   //TODO
   return (
@@ -62,60 +107,51 @@ export default function Dashboard() {
                       colorMode == "light" ? "blackAlpha.900" : "whiteAlpha.900"
                     }
                   >
-                    Welcome to your Dashboard {user.email}!
+                    Welcome to your Dashboard {user.email} !
                   </Heading>
-                  <p>{user.walletAddress}</p>
                 </>
               )}
+              <Button onClick={onOpen}>import</Button>
+              <>
+                <Modal isOpen={isOpen} onClose={onClose}>
+                  <ModalOverlay />
+                  <ModalContent>
+                    <ModalBody>
+                      <ModalView isLoading={loading}></ModalView>
+                    </ModalBody>
+                    <ModalFooter>
+                      <Button colorScheme="blue" mr={3} onClick={onClose}>
+                        Close
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        onClick={importUnlistedProperties}
+                      >
+                        Import
+                      </Button>
+                    </ModalFooter>
+                  </ModalContent>
+                </Modal>
+              </>
             </Stack>
             <Divider />
             <Stack spacing={4}>
-              <TableContainer>
-                <Table variant="simple">
-                  <TableCaption>
-                    You have currently {mockedListings.length} listings on
-                    Market
-                  </TableCaption>
-                  <Thead>
-                    <Tr>
-                      {
-                        <Th color={"black"}>
-                          {<Text color={"blackAlpha.500"}>Name</Text>}
-                        </Th>
-                      }
-                      {
-                        <Th color={"black"}>
-                          {<Text color={"blackAlpha.500"}>Price</Text>}
-                        </Th>
-                      }
-                      {
-                        <Th color={"black"}>
-                          {<Text color={"blackAlpha.500"}>Edit</Text>}
-                        </Th>
-                      }
-                    </Tr>
-                  </Thead>
-                  <Tbody>
-                    {mockedListings.map((listing: Property) => {
-                      return (
-                        <Tr key={listing.name}>
-                          <Td>
-                            <Text color={"blackAlpha.900"}>{listing.name}</Text>
-                          </Td>
-                          <Td>
-                            <Text color={"blackAlpha.900"}>
-                              {listing.price}
-                            </Text>
-                          </Td>
-                          <Td>
-                            <Button color={"green"}>Edit</Button>
-                          </Td>
-                        </Tr>
-                      );
-                    })}
-                  </Tbody>
-                </Table>
-              </TableContainer>
+              <Skeleton isLoaded={!isLoading}>
+                <ListingsTable
+                  listed={false}
+                  propertyListings={user.unlistedBookings}
+                />
+                {user?.unlistedBookings?.length > 0 &&
+                user?.listingBookings?.length > 0 ? (
+                  <Divider />
+                ) : (
+                  ""
+                )}
+                <ListingsTable
+                  listed={true}
+                  propertyListings={user.listingBookings}
+                />
+              </Skeleton>
             </Stack>
           </Box>
         </Stack>
