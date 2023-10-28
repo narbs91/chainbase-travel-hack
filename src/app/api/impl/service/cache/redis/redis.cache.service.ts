@@ -51,6 +51,17 @@ export class RedisCacheService implements ICacheService<string> {
         return false;
     }
 
+    getSet = async (key: string): Promise<string[]> => {
+
+        try {
+            return await this.client.smembers(key);
+        } catch (error) {
+            console.log(error);
+        }
+
+        return []
+    }
+
     flushChildElementsForParent = async (parentKey: string) => {
         try {
             const childKeys = await this.client.smembers(parentKey);

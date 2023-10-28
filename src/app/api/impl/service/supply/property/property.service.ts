@@ -27,7 +27,7 @@ export class PropertyService implements IPropertyService {
 
         return listing;
     }
-    
+
 
     async getPropertyListings(limit: number, page: number): Promise<Property[]> {
         let listings: Property[] = [];
@@ -86,11 +86,11 @@ export class PropertyService implements IPropertyService {
 
         try {
             const cacheKey = `${userWalletAddress}:listings`;
-            const cacheResponse = await this.cacheService.get(cacheKey) as any;
+            const cacheResponse = await this.cacheService.getSet(cacheKey) as any;
 
             if (cacheResponse !== null) {
-                for (const item in cacheResponse) {
-                    listings.push(JSON.parse(item))
+                for (const item of cacheResponse) {
+                    listings.push(item)
                 }
             }
 
