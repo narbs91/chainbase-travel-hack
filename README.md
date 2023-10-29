@@ -7,11 +7,11 @@ held from Oct 23-30, 2023
 
 ## Overview
 
-ReBookt is built with largely open source technology and built to feel like a web2 app even though it's powered by web3 under the hood. We abstract away the web3 from the entire experience by covering the gas charges when it comes to minting/buring/transfering NFTs, handling transaction signatures and managing wallet creation for the user.
+ReBookt is built with largely open source technology and to look like a web2 app even though it's powered by web3 under the hood. We abstract away the web3 from the entire experience by covering the gas charges when it comes to minting/buring/transfering NFTs, handling transaction signatures and managing wallet creation for the user.
 
 ## What problem does it solve?
 
-ReBookt is looking to bring a secondary retail market for popular and/or sold out properties, particularly in the case of non-cancelable stays. If a traveler decides they no longer want to go on a trip, they lose out on getting refunded.
+ReBookt is looking to bring a secondary retail market for popular and/or sold out properties, particularly in the case of non-cancelable stays. In todays world, if a traveler decides they no longer want to go on a trip, they lose out on getting refunded.
 
 Similarly, imagine you want to go to a popular destination during a peak holiday season and it just so happens that your favorite hotel is sold out. In todays reality, you likely wont be able to goto that trip staying at the hotel you want and will have to settle for a less then ideal accommodation.
 
