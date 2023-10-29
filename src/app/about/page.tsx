@@ -42,7 +42,7 @@ function AboutPage() {
         <Text>
           ReBookt is looking to bring a secondary retail market for popular
           and/or sold out properties, particularly in the case of non-cancelable
-          stays. If a traveler decides they no longer want to go on a trip, they
+          stays. In todays world, if a traveler decides they no longer want to go on a trip, they
           lose out on getting refunded.
         </Text>
 
