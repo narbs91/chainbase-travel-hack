@@ -7,12 +7,12 @@ import {
   Divider,
   Flex,
   Avatar,
-  Center
+  Center,
 } from "@chakra-ui/react";
 
 function AboutPage() {
   return (
-    <Box p={6} maxWidth="800px" margin="0 auto">
+    <Box p={6} maxWidth="800px" margin="0 auto" color={"black"}>
       {/* Logo */}
       <VStack padding={5}>
         <Image
@@ -27,7 +27,7 @@ function AboutPage() {
       <VStack align="start" spacing={4}>
         <Heading size="lg">What is ReBookt?</Heading>
         <Text>
-          ReBookt is a secondary marketplace for hotel bookings. ReBookt members
+          ReBookt is a secondary marketplace for travel bookings, starting with Hotels. ReBookt members
           can buy or list hotel bookings for sale on our marketplace purchased
           through popular online travel agencies or directly through a hotel.
         </Text>
@@ -35,24 +35,7 @@ function AboutPage() {
 
       <Divider my={6} />
 
-      {/* How the project works */}
-      <VStack align="start" spacing={4}>
-        <Heading size="lg">How Does It Work?</Heading>
-        <Text>
-          Once a user signs up with their email address, they can import
-          bookings that are attached to that address into their ReBookt account.
-          Once imported, the user can list the hotel booking for a price of
-          their choosing. Once the hotel listing has been sold, the lister
-          receives the money for the purchase and we take care of the plumbing
-          to ensure the booking is now under the purchasers name. We collect a
-          processing fee and pass a portion of that back to the hotel in the
-          form of a royalty.
-        </Text>
-      </VStack>
-
-      <Divider my={6} />
-
-      {/* Why the team built the project */}
+      {/* What problem does it solve */}
       <VStack align="start" spacing={4}>
         <Heading size="lg">Why problem does it solve?</Heading>
         <Text>
@@ -82,6 +65,23 @@ function AboutPage() {
 
       <Divider my={6} />
 
+      {/* How the project works */}
+      <VStack align="start" spacing={4}>
+        <Heading size="lg">How Does It Work?</Heading>
+        <Text>
+          Once a user signs up with their email address, they can import
+          bookings that are attached to that address into their ReBookt account.
+          Once imported, the user can list the hotel booking for a price of
+          their choosing. Once the hotel listing has been sold, the lister
+          receives the money for the purchase and we take care of the plumbing
+          to ensure the booking is now under the purchasers name. We collect a
+          processing fee and pass a portion of that back to the hotel in the
+          form of a royalty.
+        </Text>
+      </VStack>
+
+      <Divider my={6} />
+
       {/* Team Members */}
       <Heading size="lg" mb={4}>
         Meet the Team
@@ -106,7 +106,7 @@ function AboutPage() {
         {/* Member 2 */}
         <Box flex="1" padding={3}>
           <Avatar
-            src="https://via.placeholder.com/150"
+            src="./nav_avatar.jpeg"
             borderRadius="full"
             mb={4}
             width={150}
@@ -114,8 +114,9 @@ function AboutPage() {
           />
           <Heading size="md">Nav</Heading>
           <Text>
-            Member 2 is a software engineer with over X years of experience in ABC 
-            technologies. They played a pivotal role in DEF aspect of the project.
+            Member 2 is a software engineer with over X years of experience in
+            ABC technologies. They played a pivotal role in DEF aspect of the
+            project.
           </Text>
         </Box>
       </Flex>
