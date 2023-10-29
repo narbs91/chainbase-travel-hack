@@ -7,7 +7,7 @@ import { Polygon, BaseGoerli } from '@thirdweb-dev/chains';
 
 
 //TODO: change depending on env
-const selectedChain = Polygon
+const selectedChain = BaseGoerli
 
 const sdk = ThirdwebSDK.fromPrivateKey(process.env.PRIVATE_KEY as string, selectedChain, {
     secretKey: process.env.THIRD_WEB_SECRET_KEY as string,

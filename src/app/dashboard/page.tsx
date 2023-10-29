@@ -37,25 +37,12 @@ import {
 import { UserPropertiesResponse } from "../api/impl/types/httpResponses";
 import ListingsTable from "../components/listing-table";
 
-function ModalView(props: any) {
-  if (props.success) {
-    if (props.isLoading) {
-      return <Spinner></Spinner>;
-    } else {
-      return <Text>Are you sure?</Text>;
-    }
-  } else {
-    return <Text>Success!</Text>;
-  }
-}
-
 export default function Dashboard() {
   const { user } = useGlobalContext();
   const { colorMode } = useColorMode();
   let { isOpen, onOpen, onClose } = useDisclosure();
 
   let loading = false;
-  let success = false;
 
   async function fetcher<JSON = any>(url: string): Promise<JSON> {
     const res = await fetch(url);
@@ -67,12 +54,11 @@ export default function Dashboard() {
     const res = fetch(`/api/import`);
 
     const unlistedProperties = await (await res).json();
-
     if (unlistedProperties) {
-      loading = false;
-      success = true;
+      onClose();
       user.unlistedBookings = unlistedProperties.bookings;
     }
+    loading = false;
   }
 
   const { data, error, isLoading } = useSWR<UserPropertiesResponse>(
@@ -97,42 +83,74 @@ export default function Dashboard() {
             p={8}
           >
             <Stack spacing={4}>
-              {user?.email && (
-                <>
-                  <Heading
-                    alignContent={"flex-start"}
-                    p={"2"}
-                    fontSize={"4xl"}
-                    color={
-                      colorMode == "light" ? "blackAlpha.900" : "whiteAlpha.900"
-                    }
-                  >
-                    Welcome to your Dashboard {user.email} !
-                  </Heading>
-                </>
-              )}
-              <Button onClick={onOpen}>import</Button>
-              <>
+              <Stack dir="row">
+                <Box alignSelf={"flex-end"} maxW={"20vw"}>
+                  <Button colorScheme="red" onClick={onOpen}>
+                    Import Listings
+                  </Button>
+                </Box>
+
+                {user?.email && (
+                  <>
+                    <Heading
+                      alignContent={"flex-start"}
+                      alignSelf={"center"}
+                      p={"2"}
+                      fontSize={"3xl"}
+                      color={
+                        colorMode == "light"
+                          ? "blackAlpha.900"
+                          : "whiteAlpha.900"
+                      }
+                    >
+                      Welcome!
+                    </Heading>
+                  </>
+                )}
+              </Stack>
                 <Modal isOpen={isOpen} onClose={onClose}>
                   <ModalOverlay />
-                  <ModalContent>
-                    <ModalBody>
-                      <ModalView isLoading={loading}></ModalView>
-                    </ModalBody>
-                    <ModalFooter>
-                      <Button colorScheme="blue" mr={3} onClick={onClose}>
-                        Close
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        onClick={importUnlistedProperties}
-                      >
-                        Import
-                      </Button>
-                    </ModalFooter>
+                  <ModalContent minW={"38vw"}>
+                    {loading ? (
+                      <ModalBody>
+                        <Stack textAlign={"center"}>
+                          <Spinner
+                            m={10}
+                            alignSelf="center"
+                            size="xl"
+                            color="black"
+                          />
+                        </Stack>
+                      </ModalBody>
+                    ) : (
+                      <>
+                        <ModalBody>
+                          <Stack textAlign={"center"}>
+                            {loading.toString()}
+                            <Text fontSize={"2xl"} mt={10} color="black">
+                              Using {user.email} to import all possible
+                              lisitings.
+                            </Text>
+                             <Text mt="4" fontWeight={"bold"} color="black">
+                              Are you sure?
+                            </Text>
+                          </Stack>
+                        </ModalBody>
+                        <ModalFooter>
+                          <Button colorScheme="blue" mr={3} onClick={onClose}>
+                            Close
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            onClick={importUnlistedProperties}
+                          >
+                            Import
+                          </Button>
+                        </ModalFooter>
+                      </>
+                    )}
                   </ModalContent>
                 </Modal>
-              </>
             </Stack>
             <Divider />
             <Stack spacing={4}>
@@ -142,15 +160,20 @@ export default function Dashboard() {
                   propertyListings={user.unlistedBookings}
                 />
                 {user?.unlistedBookings?.length > 0 &&
-                user?.listingBookings?.length > 0 ? (
-                  <Divider />
+                data &&
+                data.properties.length > 0 ? (
+                  <Divider pt={2} />
                 ) : (
                   ""
                 )}
-                <ListingsTable
-                  listed={true}
-                  propertyListings={user.listingBookings}
-                />
+                {data ? (
+                  <ListingsTable
+                    listed={true}
+                    propertyListings={data.properties}
+                  />
+                ) : (
+                  ""
+                )}
               </Skeleton>
             </Stack>
           </Box>
