@@ -25,9 +25,9 @@ export default function NavItems() {
         <Link>
           <Button
             onClick={logout}
-            color="black"
-            variant="ghost"
+            color="white"
             title="nav-logout-button"
+            colorScheme="red"
           >
             Logout
           </Button>
@@ -39,10 +39,10 @@ export default function NavItems() {
       <>
         <Link>
           <Button
-            color="black"
-            variant="ghost"
+            color="white"
             title="nav-login-button"
             onClick={() => router.push("/login")}
+            colorScheme="green"
           >
             Login
           </Button>
