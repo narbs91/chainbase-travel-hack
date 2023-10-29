@@ -10,7 +10,9 @@ import {
   ModalFooter,
   ModalHeader,
   Stack,
+  Spinner,
 } from "@chakra-ui/react";
+import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 
 export default function ListingForm({
@@ -27,6 +29,12 @@ export default function ListingForm({
     formState: { errors },
   } = useForm<Property>();
   let { user } = useGlobalContext();
+  const [loading, setLoading] = useState(false);
+
+  async function submitNft(updateListing: Property) {
+    setLoading(true);
+    listing.price = updateListing.price;
+    listing.description = updateListing.description;
 
   async function submitNft(updateListing: Property) {
     listing.price = updateListing.price;
@@ -50,81 +58,87 @@ export default function ListingForm({
       }
       closeModal();
     }
+    setLoading(false);
   }
 
   return (
     <>
-      <form onSubmit={handleSubmit(submitNft)}>
-        <ModalHeader alignSelf={"center"} mt="2" color={"blackAlpha.800"}>
-          Listing Details
-        </ModalHeader>
-        <ModalBody>
-          <Stack spacing={4}>
-            <InputGroup color="black">
-              <InputLeftAddon />
-              <Input
-                disabled={true}
-                value={listing.name}
-                variant="outline"
-                placeholder="Outline"
-              />
-            </InputGroup>
-            <InputGroup color="black">
-              <InputLeftAddon />
-              <Input
-                disabled={true}
-                value={listing.address}
-                variant="outline"
-                placeholder="Outline"
-              />
-            </InputGroup>
-            <InputGroup color="black">
-              <InputLeftAddon />
-              <Input
-                disabled={true}
-                value={listing.checkInDate}
-                variant="outline"
-                placeholder="Outline"
-              />
-            </InputGroup>
-            <InputGroup color="black">
-              <InputLeftAddon />
-              <Input
-                disabled={true}
-                value={listing.checkoutDate}
-                variant="outline"
-                placeholder="Outline"
-              />
-            </InputGroup>
-            {/* If you add the size prop to `InputGroup`, it'll pass it to all its children. */}
-            <InputGroup color="black">
-              <InputLeftAddon />
-              <Input
-                defaultValue={listing.price}
-                placeholder="Enter amount"
-                {...register("price")}
-              />
-            </InputGroup>
-            <InputGroup color="black">
-              <InputLeftAddon />
-              <Input
-                color="black"
-                placeholder="Here is a sample placeholder"
-                defaultValue={listing.description}
-                {...register("description")}
-              />
-            </InputGroup>
-          </Stack>
-        </ModalBody>
-        <ModalFooter>
-          <Button colorScheme="blue" mr={3} onClick={closeModal}>
-            Close
-          </Button>
-          <Button variant="ghost" type="submit">
-            List
-          </Button>
-        </ModalFooter>
-      </form>
+      {loading ? (
+        <Spinner m={10} alignSelf="center" size="xl" color="black" />
+      ) : (
+        <form onSubmit={handleSubmit(submitNft)}>
+          <ModalHeader alignSelf={"center"} mt="2" color={"blackAlpha.800"}>
+            Listing Details
+          </ModalHeader>
+          <ModalBody>
+            <Stack spacing={4}>
+              <InputGroup color="black">
+                <InputLeftAddon children="Name" />
+                <Input
+                  disabled={true}
+                  value={listing.name}
+                  variant="outline"
+                  placeholder="Outline"
+                />
+              </InputGroup>
+              <InputGroup color="black">
+                <InputLeftAddon children="Address" />
+                <Input
+                  disabled={true}
+                  value={listing.address}
+                  variant="outline"
+                  placeholder="Outline"
+                />
+              </InputGroup>
+              <InputGroup color="black">
+                <InputLeftAddon children="Checkin Date" />
+                <Input
+                  disabled={true}
+                  value={listing.checkInDate}
+                  variant="outline"
+                  placeholder="Outline"
+                />
+              </InputGroup>
+              <InputGroup color="black">
+                <InputLeftAddon children="Checkout Date" />
+                <Input
+                  disabled={true}
+                  value={listing.checkoutDate}
+                  variant="outline"
+                  placeholder="Outline"
+                />
+              </InputGroup>
+              {/* If you add the size prop to `InputGroup`, it'll pass it to all its children. */}
+              <InputGroup color="black">
+                <InputLeftAddon children="Price" />
+                <Input
+                  defaultValue={listing.price}
+                  placeholder="Enter amount"
+                  {...register("price")}
+                />
+              </InputGroup>
+              <InputGroup color="black">
+                <InputLeftAddon children="Short Description" />
+                <Input
+                  color="black"
+                  placeholder="Here is a sample placeholder"
+                  defaultValue={listing.description}
+                  {...register("description")}
+                />
+              </InputGroup>
+            </Stack>
+          </ModalBody>
+          <ModalFooter>
+            <Button colorScheme="blue" mr={3} onClick={closeModal}>
+              Close
+            </Button>
+            <Button variant="ghost" type="submit">
+              List
+            </Button>
+          </ModalFooter>
+        </form>
+      )}
     </>
-  );
+  )
+      }
 }

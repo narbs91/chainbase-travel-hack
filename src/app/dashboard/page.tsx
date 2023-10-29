@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useGlobalContext } from "../context/context";
 import { Property } from "../types/property";
 import useSWR from "swr";
@@ -41,8 +41,8 @@ export default function Dashboard() {
   const { user } = useGlobalContext();
   const { colorMode } = useColorMode();
   let { isOpen, onOpen, onClose } = useDisclosure();
+  const [loading, setLoading] = useState(false);
 
-  let loading = false;
 
   async function fetcher<JSON = any>(url: string): Promise<JSON> {
     const res = await fetch(url);
@@ -50,7 +50,7 @@ export default function Dashboard() {
   }
 
   async function importUnlistedProperties() {
-    loading = true;
+    setLoading(true)
     const res = fetch(`/api/import`);
 
     const unlistedProperties = await (await res).json();
@@ -58,7 +58,7 @@ export default function Dashboard() {
       onClose();
       user.unlistedBookings = unlistedProperties.bookings;
     }
-    loading = false;
+    setLoading(false)
   }
 
   const { data, error, isLoading } = useSWR<UserPropertiesResponse>(
