@@ -5,7 +5,7 @@ import React from "react";
 import { Button, Link } from "@chakra-ui/react";
 import { useGlobalContext } from "@/app/context/context";
 import { User } from "@/app/types/user";
-import { magic } from "@/auth/magic";
+import { magic } from "@/app/auth/magic";
 import { useRouter } from "next/navigation";
 
 export default function NavItems() {

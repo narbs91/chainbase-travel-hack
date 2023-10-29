@@ -8,7 +8,7 @@ import {
 import isEmail from "validator/lib/isEmail";
 import { Field, Form, Formik } from "formik";
 import { useState } from "react";
-import { magic, magicAdmin } from "@/auth/magic";
+import { magic, magicAdmin } from "@/app/auth/magic";
 import { useRouter } from "next/navigation";
 import { useGlobalContext } from "../context/context";
 import { User } from "../types/user";
