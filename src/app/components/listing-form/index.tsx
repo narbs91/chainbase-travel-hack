@@ -29,12 +29,7 @@ export default function ListingForm({
     formState: { errors },
   } = useForm<Property>();
   let { user } = useGlobalContext();
-  const [loading, setLoading] = useState(false);
-
-  async function submitNft(updateListing: Property) {
-    setLoading(true);
-    listing.price = updateListing.price;
-    listing.description = updateListing.description;
+  const [formLoading, setFormLoading] = useState(false);
 
   async function submitNft(updateListing: Property) {
     listing.price = updateListing.price;
@@ -58,12 +53,12 @@ export default function ListingForm({
       }
       closeModal();
     }
-    setLoading(false);
+    setFormLoading(false);
   }
 
   return (
     <>
-      {loading ? (
+      {formLoading ? (
         <Spinner m={10} alignSelf="center" size="xl" color="black" />
       ) : (
         <form onSubmit={handleSubmit(submitNft)}>
@@ -140,5 +135,4 @@ export default function ListingForm({
       )}
     </>
   )
-      }
 }
