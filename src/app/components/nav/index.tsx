@@ -39,7 +39,7 @@ export default function Nav() {
             fontSize="lg"
             transition="color 300ms ease-in-out"
             color="black"
-            title="nav-gpc-home-button"
+            title="nav-reebokt-logo"
           >
             ReBookt
           </chakra.span>

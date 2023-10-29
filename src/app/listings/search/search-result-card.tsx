@@ -40,7 +40,7 @@ const SearchResultCard = ({
       <CardBody>
         <Image
           width={"100%"}
-          src={imageUrl || "https://via.placeholder.com/500x300"}
+          src={imageUrl || "/hotel_placeholder_image.png"}
           alt="Hotel Image"
           borderRadius="lg"
         />

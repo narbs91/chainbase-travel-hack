@@ -5,7 +5,7 @@ import React from "react";
 import { Button, Link } from "@chakra-ui/react";
 import { useGlobalContext } from "@/app/context/context";
 import { User } from "@/app/types/user";
-import { magic } from "@/auth/magic";
+import { magic } from "@/app/auth/magic";
 import { useRouter } from "next/navigation";
 
 export default function NavItems() {
@@ -25,9 +25,9 @@ export default function NavItems() {
         <Link>
           <Button
             onClick={logout}
-            color="black"
-            variant="ghost"
+            color="white"
             title="nav-logout-button"
+            colorScheme="red"
           >
             Logout
           </Button>
@@ -39,10 +39,10 @@ export default function NavItems() {
       <>
         <Link>
           <Button
-            color="black"
-            variant="ghost"
+            color="white"
             title="nav-login-button"
             onClick={() => router.push("/login")}
+            colorScheme="green"
           >
             Login
           </Button>
