@@ -37,7 +37,7 @@ function AboutPage() {
 
       {/* What problem does it solve */}
       <VStack align="start" spacing={4}>
-        <Heading size="lg">Why problem does it solve?</Heading>
+        <Heading size="lg">What problem does it solve?</Heading>
         <Text>
           ReBookt is looking to bring a secondary retail market for popular
           and/or sold out properties, particularly in the case of non-cancelable
@@ -67,7 +67,7 @@ function AboutPage() {
 
       {/* How the project works */}
       <VStack align="start" spacing={4}>
-        <Heading size="lg">How Does It Work?</Heading>
+        <Heading size="lg">How Does it Work?</Heading>
         <Text>
           Once a user signs up with their email address, they can import
           bookings that are attached to that address into their ReBookt account.
