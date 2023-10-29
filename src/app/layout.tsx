@@ -4,6 +4,7 @@ import { Providers } from "./providers";
 import "./globals.css";
 import { GlobalContextProvider } from "./context/context";
 import Nav from "./components/nav";
+import Footer from "./components/footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,8 +23,9 @@ export default function RootLayout({
       <body>
         <Providers>
           <GlobalContextProvider>
-            <Nav></Nav>
+            <Nav />
             {children}
+            <Footer />
           </GlobalContextProvider>
         </Providers>
       </body>
