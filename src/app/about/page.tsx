@@ -27,8 +27,9 @@ function AboutPage() {
       <VStack align="start" spacing={4}>
         <Heading size="lg">What is ReBookt?</Heading>
         <Text>
-          ReBookt is a secondary marketplace for travel bookings, starting with Hotels. ReBookt members
-          can buy or list hotel bookings for sale on our marketplace purchased
+          ReBookt is a proof of concept secondary marketplace for travel
+          bookings powered by web3, starting with Hotels. ReBookt members can
+          buy or list hotel bookings for sale on our marketplace purchased
           through popular online travel agencies or directly through a hotel.
         </Text>
       </VStack>
@@ -41,19 +42,16 @@ function AboutPage() {
         <Text>
           ReBookt is looking to bring a secondary retail market for popular
           and/or sold out properties, particularly in the case of non-cancelable
-          stays . When a hotel booking is made, its often the case that the end
-          traveler wants to purchase that stay for the lowest price possible.
-          Typically the cheapest rates for stays are usually bookings that
-          cannot be cancelled meaning if the traveler decides they no longer
-          want to go on a trip, they lose out on getting refunded.
+          stays. If a traveler decides they no longer want to go on a trip, they
+          lose out on getting refunded.
         </Text>
 
         <Text>
           Similarly, imagine you want to go to a popular destination during a
           peak holiday season and it just so happens that your favorite hotel is
           sold out. In todays reality, you likely wont be able to goto that trip
-          at the hotel you want and will have to settle for a less then ideal
-          accommodation
+          staying at the hotel you want and will have to settle for a less then
+          ideal accommodation.
         </Text>
 
         <Text>
@@ -74,7 +72,7 @@ function AboutPage() {
           Once imported, the user can list the hotel booking for a price of
           their choosing. Once the hotel listing has been sold, the lister
           receives the money for the purchase and we take care of the plumbing
-          to ensure the booking is now under the purchasers name. We collect a
+          to ensure the booking is properly transferred. We collect a
           processing fee and pass a portion of that back to the hotel in the
           form of a royalty.
         </Text>
