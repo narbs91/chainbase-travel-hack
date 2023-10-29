@@ -5,7 +5,6 @@ import {
   InputGroup,
   InputLeftAddon,
   Input,
-  list,
   Button,
   ModalBody,
   ModalFooter,
@@ -34,6 +33,10 @@ export default function ListingForm({
 
   async function submitNft(updateListing: Property) {
     setLoading(true);
+    listing.price = updateListing.price;
+    listing.description = updateListing.description;
+
+  async function submitNft(updateListing: Property) {
     listing.price = updateListing.price;
     listing.description = updateListing.description;
 
@@ -136,5 +139,6 @@ export default function ListingForm({
         </form>
       )}
     </>
-  );
+  )
+      }
 }
