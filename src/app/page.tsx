@@ -58,7 +58,7 @@ export default function Home() {
               color={"white"}
               onClick={shopNow}
             >
-              Shop Now
+              Browse Listings
             </Button>
           </VStack>
         </Container>
