@@ -1,6 +1,6 @@
 /* eslint-disable react/no-children-prop */
+"use client";
 
-import { PropertyService } from "@/app/api/impl/service/supply/property/property.service";
 import { useGlobalContext } from "@/app/context/context";
 import { Property } from "@/app/types/property";
 import {
@@ -18,8 +18,6 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-
-const propertyService = new PropertyService();
 
 export default function ListingForm({
   listing,
@@ -44,9 +42,15 @@ export default function ListingForm({
     if (user && user.walletAddress != null) {
       setFormLoading(true);
       listing.lister = user.walletAddress;
-      const res = await propertyService.createPropertyListing(updateListing);
+      const res = await fetch("/api/listings", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(listing),
+      });
 
-      if (res) {
+      if (res.ok) {
         const index = user.unlistedBookings.findIndex(
           (userUnlistedBooking) => userUnlistedBooking.id == listing.id
         );
