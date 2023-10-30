@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { ImportBookingService } from "../impl/service/import/import.booking.service";
 
+export const revalidate = 0;
+
 const importService = new ImportBookingService();
 
 export async function GET() {
