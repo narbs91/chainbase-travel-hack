@@ -32,8 +32,17 @@ export default function ListingForm({
     watch,
     formState: { errors },
   } = useForm<Property>();
-  let { user } = useGlobalContext();
+  let { user, setUser } = useGlobalContext();
   const [formLoading, setFormLoading] = useState(false);
+
+  async function updateListedProperties() {
+    const res = await fetch(`/api/listings?walletAddress=${user.walletAddress}`)
+
+    if (res.ok) {
+      const listedProperties = await res.json();
+      setUser({...user, listingBookings: listedProperties.properties })
+    }
+  }
 
   async function submitNft(updateListing: Property) {
     listing.price = updateListing.price;
@@ -57,6 +66,7 @@ export default function ListingForm({
         user.unlistedBookings.splice(index, 1);
 
         listing.listed = true;
+        updateListedProperties()
       }
       closeModal();
     }
