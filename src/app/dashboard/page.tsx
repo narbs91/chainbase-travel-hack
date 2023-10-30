@@ -72,7 +72,7 @@ export default function Dashboard() {
           >
             <Stack spacing={4}>
               <Stack dir="row">
-                <Box alignSelf={"flex-end"} maxW={"20vw"}>
+                <Box alignSelf={"flex-start"} maxW={"20vw"}>
                   <Button colorScheme="blue" onClick={onOpen}>
                     Import Listings
                   </Button>

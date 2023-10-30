@@ -36,7 +36,7 @@ const SearchResultCard = ({
   };
 
   return (
-    <Card maxW="100%" direction="column">
+    <Card maxW="100%" direction="column" shadow={"lg"}>
       <CardBody>
         <Image
           width={"100%"}
