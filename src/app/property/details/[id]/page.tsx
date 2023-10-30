@@ -14,7 +14,6 @@ async function getData(id: string) {
 
 const HotelDetailsPage = async ({ params }: { params: { id: string } }) => {
   const property = await getData(params.id);
-  console.log(typeof property);
 
   if (_.isEmpty(property)) {
     return (

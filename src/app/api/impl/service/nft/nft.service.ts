@@ -37,7 +37,6 @@ export class NFTService implements INFTService {
             // Sign transaction on users behalf
             const tx = await contract.erc721.signature.mint(signedPayload);
             const receipt = tx.receipt; // the transaction receipt
-            console.log(`receipt: ${receipt}`)
 
             return tx.id.toNumber().toString(); // the id of the NFT minted
         } catch (error) {
