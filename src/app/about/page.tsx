@@ -42,8 +42,8 @@ function AboutPage() {
         <Text>
           ReBookt is looking to bring a secondary retail market for popular
           and/or sold out properties, particularly in the case of non-cancelable
-          stays. In todays world, if a traveler decides they no longer want to go on a trip, they
-          lose out on getting refunded.
+          stays. In todays world, if a traveler decides they no longer want to
+          go on a non-cancelable trip, they often lose out on getting their money refunded.
         </Text>
 
         <Text>
@@ -72,9 +72,9 @@ function AboutPage() {
           Once imported, the user can list the hotel booking for a price of
           their choosing. Once the hotel listing has been sold, the lister
           receives the money for the purchase and we take care of the plumbing
-          to ensure the booking is properly transferred. We collect a
-          processing fee and pass a portion of that back to the hotel in the
-          form of a royalty.
+          to ensure the booking is properly transferred. We collect a processing
+          fee and pass a portion of that back to the hotel in the form of a
+          royalty.
         </Text>
       </VStack>
 
@@ -112,9 +112,8 @@ function AboutPage() {
           />
           <Heading size="md">Nav</Heading>
           <Text>
-            Member 2 is a software engineer with over X years of experience in
-            ABC technologies. They played a pivotal role in DEF aspect of the
-            project.
+            Nav is a software developer based out of Vancouver. He is pretty
+            passionate about exploring the latest technological advancements.
           </Text>
         </Box>
       </Flex>

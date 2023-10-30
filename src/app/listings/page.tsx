@@ -4,7 +4,7 @@ import SearchResultCard from "./search/search-result-card";
 import DataLoadErrorComponent from "./search/data-not-loaded";
 import { Property } from "../types/property";
 
-export const revalidate = 60;
+export const revalidate = 0;
 
 async function getData() {
   const propertyService = new PropertyService();

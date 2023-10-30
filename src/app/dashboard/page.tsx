@@ -26,6 +26,8 @@ import {
 import { UserPropertiesResponse } from "../api/impl/types/httpResponses";
 import ListingsTable from "../components/listing-table";
 
+export const revalidate = 0;
+
 export default function Dashboard() {
   const { user } = useGlobalContext();
   const { colorMode } = useColorMode();

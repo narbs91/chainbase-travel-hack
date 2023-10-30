@@ -1,5 +1,6 @@
 /* eslint-disable react/no-children-prop */
 "use client";
+
 import { useGlobalContext } from "@/app/context/context";
 import { Property } from "@/app/types/property";
 import {

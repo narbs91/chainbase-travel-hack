@@ -3,6 +3,8 @@ import { PropertyService } from "../impl/service/supply/property/property.servic
 import { UserPropertiesResponse } from "../impl/types/httpResponses"
 const propertyService = new PropertyService();
 
+export const maxDuration = 60;
+
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const response: UserPropertiesResponse = {
