@@ -149,10 +149,10 @@ export default function ListingForm({
             </Stack>
           </ModalBody>
           <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={closeModal}>
+            <Button colorScheme="red" mr={3} onClick={closeModal}>
               Close
             </Button>
-            <Button variant="ghost" type="submit">
+            <Button colorScheme="blue" type="submit">
               List
             </Button>
           </ModalFooter>

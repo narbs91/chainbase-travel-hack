@@ -47,9 +47,9 @@ export default function ListingsTable({
     return "No listings available";
   } else {
     tableCaption = listed
-      ? `You have currently ${propertyListings.length} listings on
+      ? `You currently have ${propertyListings.length} listings on
         Market`
-      : `You have currently ${propertyListings.length} unlisted properties`;
+      : `You currently have ${propertyListings.length} unlisted properties`;
 
     return (
       <TableContainer>
