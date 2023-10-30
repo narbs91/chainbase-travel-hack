@@ -4,6 +4,7 @@ import { NFT, NFTMetadata, ThirdwebSDK } from "@thirdweb-dev/sdk";
 import { INFTService } from "./i.nft.service";
 import { NFTData } from "./model/nft.data";
 import { Polygon, BaseGoerli } from '@thirdweb-dev/chains';
+import _ from "lodash";
 
 
 //TODO: change depending on env
@@ -72,8 +73,7 @@ export class NFTService implements INFTService {
         try {
             const nft = await this.chainbaseClient.getNFTByTokenId(tokenId, this.CHAIN_ID, contractAddress);
 
-            //fallback to thirdweb if chainbase doesn't have the data in real time
-            if (!nft) {
+            if (nft && !_.isEmpty(nft)) {
                 nftData = this.mapChainbaseNFTMetadataToNFTData(nft);
 
                 if (!nftData.owner) {
