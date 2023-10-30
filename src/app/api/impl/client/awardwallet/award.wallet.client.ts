@@ -1,5 +1,6 @@
 import { getWithAuth, postWithAuth } from "../rest.client";
 import { AwardWalletHotelBooking } from "./types/award.wallet.types";
+import { mockAwardWalletResponse } from "./response/mock.response"
 
 export default class AwardWalletClient {
     private USERNAME = process.env.AWARD_WALLET_USERNAME as string;
@@ -7,7 +8,7 @@ export default class AwardWalletClient {
     private key = `${this.USERNAME}:${this.API_KEY}`;
 
     private AUTH_HEADER_KEY = 'X-Authentication';
-    
+
     private BASE_URL = "https://service.awardwallet.com/email/json/v2"
     private PARSE_EMAIL = `${this.BASE_URL}/parseEmail`;
     private GET_PARSE_RESULT = `${this.BASE_URL}/getResults`;
@@ -30,6 +31,8 @@ export default class AwardWalletClient {
 
         } catch (error) {
             console.log(error)
+            // Fall back to a mock response in the event of an error from the award wallet api
+            importedHotelBookings = this.mapResponseToAwardWalletHotelBookings(mockAwardWalletResponse)
         }
 
         return importedHotelBookings;
