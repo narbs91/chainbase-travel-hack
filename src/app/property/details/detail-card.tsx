@@ -2,18 +2,26 @@
 
 import { Property } from "@/app/types/property";
 import {
-    Box,
-    Image,
-    Text,
-    VStack,
-    Heading,
-    FormLabel,
-    Button,
-  } from "@chakra-ui/react";
+  Box,
+  Image,
+  Text,
+  VStack,
+  Heading,
+  FormLabel,
+  Button,
+} from "@chakra-ui/react";
 
 const DetailCard = ({ listing }: { listing: Property }) => {
   return (
-    <Box p={[2, 4, 6]} maxWidth="1200px" margin="0 auto" bg={"gray.100"} marginTop={3} marginBottom={3}>
+    <Box
+      p={[2, 4, 6]}
+      maxWidth="1200px"
+      margin="0 auto"
+      bg={"gray.100"}
+      marginTop={3}
+      marginBottom={3}
+      shadow={"lg"}
+    >
       {/* Hero Image */}
       <Image
         src={listing.imageUrl || "/hotel_placeholder_image.png"}
@@ -72,4 +80,4 @@ const DetailCard = ({ listing }: { listing: Property }) => {
   );
 };
 
-export default DetailCard
+export default DetailCard;

@@ -1,6 +1,5 @@
 "use client";
-import { useGlobalContext } from "@/app/context/context";
-import loading from "@/app/listings/loading";
+
 import { Property } from "@/app/types/property";
 import {
   TableContainer,
@@ -14,21 +13,9 @@ import {
   Td,
   Button,
   Modal,
-  ModalBody,
   ModalContent,
-  ModalFooter,
   ModalOverlay,
   useDisclosure,
-  Input,
-  InputGroup,
-  InputLeftAddon,
-  InputRightAddon,
-  Stack,
-  InputLeftElement,
-  InputRightElement,
-  Textarea,
-  ModalHeader,
-  Heading,
 } from "@chakra-ui/react";
 import React from "react";
 import ListingForm from "../listing-form";
@@ -47,9 +34,9 @@ export default function ListingsTable({
     return "No listings available";
   } else {
     tableCaption = listed
-      ? `You have currently ${propertyListings.length} listings on
+      ? `You currently have ${propertyListings.length} listings on
         Market`
-      : `You have currently ${propertyListings.length} unlisted properties`;
+      : `You currently have ${propertyListings.length} unlisted properties`;
 
     return (
       <TableContainer>

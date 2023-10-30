@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { chakra, Flex, HStack, Avatar, Link, Image } from "@chakra-ui/react";
+import { chakra, Flex, HStack, Avatar } from "@chakra-ui/react";
 import MobileNav from "./mobile-nav";
 import NavItems from "./nav-items";
 

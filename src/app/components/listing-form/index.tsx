@@ -12,9 +12,11 @@ import {
   ModalHeader,
   Stack,
   Spinner,
+  Text,
+  Center,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 export default function ListingForm({
   listing,
@@ -37,6 +39,7 @@ export default function ListingForm({
     listing.description = updateListing.description;
 
     if (user && user.walletAddress != null) {
+      setFormLoading(true);
       listing.lister = user.walletAddress;
       const res = await fetch("/api/listings", {
         method: "POST",
@@ -51,6 +54,8 @@ export default function ListingForm({
           (userUnlistedBooking) => userUnlistedBooking.id == listing.id
         );
         user.unlistedBookings.splice(index, 1);
+
+        listing.listed = true;
       }
       closeModal();
     }
@@ -60,7 +65,26 @@ export default function ListingForm({
   return (
     <>
       {formLoading ? (
-        <Spinner m={10} alignSelf="center" size="xl" color="black" />
+        <>
+          <Center height="50vh" background="white" flexDirection="column">
+            <Spinner
+              thickness="4px"
+              speed="0.65s"
+              emptyColor="gray.200"
+              color="blue.500"
+              size="xl"
+            />
+            <Text
+              mt={4}
+              fontSize={{ base: "md", sm: "lg", md: "xl" }}
+              fontWeight="bold"
+              color={"black"}
+              textAlign={"center"}
+            >
+              Please wait while we create your listing...
+            </Text>
+          </Center>
+        </>
       ) : (
         <form onSubmit={handleSubmit(submitNft)}>
           <ModalHeader alignSelf={"center"} mt="2" color={"blackAlpha.800"}>
@@ -125,15 +149,15 @@ export default function ListingForm({
             </Stack>
           </ModalBody>
           <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={closeModal}>
+            <Button colorScheme="red" mr={3} onClick={closeModal}>
               Close
             </Button>
-            <Button variant="ghost" type="submit">
+            <Button colorScheme="blue" type="submit">
               List
             </Button>
           </ModalFooter>
         </form>
       )}
     </>
-  )
+  );
 }

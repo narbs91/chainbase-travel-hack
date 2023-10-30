@@ -1,7 +1,6 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useGlobalContext } from "../context/context";
-import { Property } from "../types/property";
 import useSWR from "swr";
 
 import {
@@ -14,21 +13,11 @@ import {
   useColorModeValue,
   useColorMode,
   Divider,
-  TableContainer,
-  Table,
-  TableCaption,
-  Tbody,
-  Td,
-  Th,
-  Thead,
-  Tr,
   Skeleton,
   Modal,
   ModalBody,
-  ModalCloseButton,
   ModalContent,
   ModalFooter,
-  ModalHeader,
   ModalOverlay,
   useDisclosure,
   Spinner,
@@ -43,14 +32,13 @@ export default function Dashboard() {
   let { isOpen, onOpen, onClose } = useDisclosure();
   const [loading, setLoading] = useState(false);
 
-
   async function fetcher<JSON = any>(url: string): Promise<JSON> {
     const res = await fetch(url);
     return res.json();
   }
 
   async function importUnlistedProperties() {
-    setLoading(true)
+    setLoading(true);
     const res = fetch(`/api/import`);
 
     const unlistedProperties = await (await res).json();
@@ -58,7 +46,7 @@ export default function Dashboard() {
       onClose();
       user.unlistedBookings = unlistedProperties.bookings;
     }
-    setLoading(false)
+    setLoading(false);
   }
 
   const { data, error, isLoading } = useSWR<UserPropertiesResponse>(
@@ -84,8 +72,8 @@ export default function Dashboard() {
           >
             <Stack spacing={4}>
               <Stack dir="row">
-                <Box alignSelf={"flex-end"} maxW={"20vw"}>
-                  <Button colorScheme="red" onClick={onOpen}>
+                <Box alignSelf={"flex-start"} maxW={"20vw"}>
+                  <Button colorScheme="blue" onClick={onOpen}>
                     Import Listings
                   </Button>
                 </Box>
@@ -108,49 +96,48 @@ export default function Dashboard() {
                   </>
                 )}
               </Stack>
-                <Modal isOpen={isOpen} onClose={onClose}>
-                  <ModalOverlay />
-                  <ModalContent minW={"38vw"}>
-                    {loading ? (
+              <Modal isOpen={isOpen} onClose={onClose}>
+                <ModalOverlay />
+                <ModalContent minW={"38vw"}>
+                  {loading ? (
+                    <ModalBody>
+                      <Stack textAlign={"center"}>
+                        <Spinner
+                          m={10}
+                          alignSelf="center"
+                          size="xl"
+                          color="black"
+                        />
+                      </Stack>
+                    </ModalBody>
+                  ) : (
+                    <>
                       <ModalBody>
                         <Stack textAlign={"center"}>
-                          <Spinner
-                            m={10}
-                            alignSelf="center"
-                            size="xl"
-                            color="black"
-                          />
+                          {loading.toString()}
+                          <Text fontSize={"2xl"} mt={10} color="black">
+                            Using {user.email} to import all possible listings.
+                          </Text>
+                          <Text mt="4" fontWeight={"bold"} color="black">
+                            Are you sure?
+                          </Text>
                         </Stack>
                       </ModalBody>
-                    ) : (
-                      <>
-                        <ModalBody>
-                          <Stack textAlign={"center"}>
-                            {loading.toString()}
-                            <Text fontSize={"2xl"} mt={10} color="black">
-                              Using {user.email} to import all possible
-                              lisitings.
-                            </Text>
-                             <Text mt="4" fontWeight={"bold"} color="black">
-                              Are you sure?
-                            </Text>
-                          </Stack>
-                        </ModalBody>
-                        <ModalFooter>
-                          <Button colorScheme="blue" mr={3} onClick={onClose}>
-                            Close
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            onClick={importUnlistedProperties}
-                          >
-                            Import
-                          </Button>
-                        </ModalFooter>
-                      </>
-                    )}
-                  </ModalContent>
-                </Modal>
+                      <ModalFooter>
+                        <Button colorScheme="red" mr={3} onClick={onClose}>
+                          Close
+                        </Button>
+                        <Button
+                          colorScheme="blue"
+                          onClick={importUnlistedProperties}
+                        >
+                          Import
+                        </Button>
+                      </ModalFooter>
+                    </>
+                  )}
+                </ModalContent>
+              </Modal>
             </Stack>
             <Divider />
             <Stack spacing={4}>
