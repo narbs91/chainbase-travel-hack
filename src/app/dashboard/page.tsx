@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useGlobalContext } from "../context/context";
 import useSWR from "swr";
 
@@ -29,15 +29,15 @@ import ListingsTable from "../components/listing-table";
 export const revalidate = 0;
 
 export default function Dashboard() {
-  const { user } = useGlobalContext();
+  const { user, setUser } = useGlobalContext();
   const { colorMode } = useColorMode();
   let { isOpen, onOpen, onClose } = useDisclosure();
   const [loading, setLoading] = useState(false);
+  const [listingLoading, setListingLoading] = useState(false);
 
-  async function fetcher<JSON = any>(url: string): Promise<JSON> {
-    const res = await fetch(url);
-    return res.json();
-  }
+  useEffect(() => {
+    updateListedProperties();
+  }, []);
 
   async function importUnlistedProperties() {
     setLoading(true);
@@ -46,15 +46,24 @@ export default function Dashboard() {
     const unlistedProperties = await (await res).json();
     if (unlistedProperties) {
       onClose();
-      user.unlistedBookings = unlistedProperties.bookings;
+      
+      setUser({...user, unlistedBookings: unlistedProperties.bookings })
     }
     setLoading(false);
   }
 
-  const { data, error, isLoading } = useSWR<UserPropertiesResponse>(
-    `/api/listings?walletAddress=${user.walletAddress}`,
-    fetcher
-  );
+  async function updateListedProperties() {
+    setListingLoading(true)
+    const res = await fetch(`/api/listings?walletAddress=${user.walletAddress}`)
+
+    if (res.ok) {
+      const listedProperties = await res.json();
+      console.log(listedProperties)
+      setUser({...user, listingBookings: listedProperties.properties })
+      console.log(user,{...user, listingBookings: listedProperties.properties })
+    }
+    setListingLoading(false)
+  }
 
   //TODO
   return (
@@ -143,22 +152,22 @@ export default function Dashboard() {
             </Stack>
             <Divider />
             <Stack spacing={4}>
-              <Skeleton isLoaded={!isLoading}>
+              <Skeleton isLoaded={!listingLoading}>
                 <ListingsTable
                   listed={false}
                   propertyListings={user.unlistedBookings}
                 />
                 {user?.unlistedBookings?.length > 0 &&
-                data &&
-                data.properties.length > 0 ? (
+                user &&
+                user.listingBookings.length > 0 ? (
                   <Divider pt={2} />
                 ) : (
                   ""
                 )}
-                {data ? (
+                {user ? (
                   <ListingsTable
                     listed={true}
-                    propertyListings={data.properties}
+                    propertyListings={user.listingBookings}
                   />
                 ) : (
                   ""
