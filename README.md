@@ -41,7 +41,7 @@ Deployment done via [Vercel](https://vercel.com/)
 ## Running Locally
 While it is possible to run the app locally, you will need to populate the values in an .env file (see sample provided).  The recommended way of playing around with the app is to used the [actual deployed webapp](https://chainbase-travel-hack.vercel.app/); however, if you do want to attempt to run the app locally with your own set of provided .env values:
 
-First, install the dependencies:
+First, install the dependencies: 
 
 ```bash
 npm install
