@@ -8,7 +8,7 @@ export const revalidate = 0;
 
 async function getData() {
   const propertyService = new PropertyService();
-  const listings = await propertyService.getPropertyListings(20, 1);
+  const listings = await propertyService.getPropertyListings(30, 1);
 
   return listings;
 }
